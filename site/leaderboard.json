@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T16:54:37.798Z",
+  "generatedAt": "2026-06-17T18:13:13.773Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T16:54:37.798Z",
+    "generatedAt": "2026-06-17T18:13:13.773Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -27,13 +27,13 @@
     "liveRatingFloor": 1000,
     "liveSource": "Pokemon Showdown public ladder rating observed at battle start, plus estimated final point"
   },
-  "totalGames": 167,
+  "totalGames": 164,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T16:54:37.798Z",
-    "lastBattleAt": "2026-06-17T16:50:53.878Z",
-    "activePlayers": 5,
-    "totalPlayers": 5
+    "generatedAt": "2026-06-17T18:13:13.773Z",
+    "lastBattleAt": "2026-06-17T06:53:32.633Z",
+    "activePlayers": 4,
+    "totalPlayers": 4
   },
   "players": [
     {
@@ -1021,90 +1021,6 @@
       ]
     },
     {
-      "id": "gpt-5.5-high",
-      "name": "OpenAI GPT-5.5 High",
-      "type": "openai",
-      "model": "gpt-5.5",
-      "reasoningEffort": "high",
-      "teamSource": "openai-generated",
-      "rating": 1005,
-      "benchmarkRating": 1005,
-      "ratingSource": "estimated-final",
-      "ratingDelta": -17,
-      "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1022,
-      "peakRating": 1040,
-      "floorRating": 1000,
-      "games": 3,
-      "wins": 1,
-      "losses": 2,
-      "ties": 0,
-      "winRate": 0.3333,
-      "averageTurns": 19.3,
-      "choices": 71,
-      "invalidActions": 39,
-      "timeouts": 38,
-      "errors": 0,
-      "actionFailureRate": 1.0845,
-      "currentStreak": {
-        "kind": "loss",
-        "count": 2
-      },
-      "liveStatus": {
-        "state": "sent-choice",
-        "label": "Sent Choice",
-        "updatedAt": "2026-06-17T16:54:36.244Z",
-        "lastEvent": "sent move 3",
-        "battleRoomId": "battle-gen9championsou-2633937931-2jaefif8rcej6j2opbp81ccdyxx1ckwpw",
-        "battleStartedAt": "2026-06-17T16:50:59.510Z",
-        "battleTurns": 12,
-        "opponent": {
-          "sideId": "p2",
-          "username": "felipelimaolimpio",
-          "ratingBefore": 1000
-        },
-        "gamesCompleted": 3
-      },
-      "lastBattleAt": "2026-06-17T16:50:53.878Z",
-      "uniqueOpponents": 3,
-      "ratingHistory": [
-        {
-          "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
-        },
-        {
-          "battle": 1,
-          "rating": 1000,
-          "at": "2026-06-17T16:28:05.026Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 2,
-          "rating": 1040,
-          "at": "2026-06-17T16:33:31.375Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 3,
-          "rating": 1022,
-          "at": "2026-06-17T16:45:12.000Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 3,
-          "rating": 1005,
-          "at": "2026-06-17T16:50:53.878Z",
-          "source": "estimated-final",
-          "outcome": "loss",
-          "ratingBefore": 1022,
-          "opponentRating": 1000,
-          "delta": -17
-        }
-      ]
-    },
-    {
       "id": "o3",
       "name": "OpenAI o3",
       "type": "openai",
@@ -1275,5 +1191,12 @@
       ]
     }
   ],
-  "disabledPlayers": []
+  "disabledPlayers": [
+    {
+      "id": "gpt-5.5-high",
+      "model": "gpt-5.5",
+      "reasoningEffort": "high",
+      "reason": null
+    }
+  ]
 }

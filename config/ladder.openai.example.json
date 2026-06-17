@@ -77,7 +77,7 @@
     },
     {
       "id": "gpt-5.5-high",
-      "enabled": true,
+      "enabled": false,
       "name": "OpenAI GPT-5.5 High",
       "type": "openai",
       "model": "gpt-5.5",
