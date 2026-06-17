@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T16:32:37.751Z",
+  "generatedAt": "2026-06-17T16:38:28.052Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T16:32:37.751Z",
+    "generatedAt": "2026-06-17T16:38:28.052Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -27,12 +27,12 @@
     "liveRatingFloor": 1000,
     "liveSource": "Pokemon Showdown public ladder rating observed at battle start, plus estimated final point"
   },
-  "totalGames": 164,
+  "totalGames": 165,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T16:32:37.751Z",
-    "lastBattleAt": "2026-06-17T06:53:32.633Z",
-    "activePlayers": 4,
+    "generatedAt": "2026-06-17T16:38:28.052Z",
+    "lastBattleAt": "2026-06-17T16:33:25.697Z",
+    "activePlayers": 5,
     "totalPlayers": 5
   },
   "players": [
@@ -1021,6 +1021,78 @@
       ]
     },
     {
+      "id": "gpt-5.5-high",
+      "name": "OpenAI GPT-5.5 High",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "high",
+      "teamSource": "openai-generated",
+      "rating": 1016,
+      "benchmarkRating": 1016,
+      "ratingSource": "estimated-final",
+      "ratingDelta": 16,
+      "ratingDeltaSource": "estimated-final",
+      "ratingDeltaPrevious": 1000,
+      "peakRating": 1016,
+      "floorRating": 1000,
+      "games": 1,
+      "wins": 1,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 1,
+      "averageTurns": 14,
+      "choices": 17,
+      "invalidActions": 10,
+      "timeouts": 10,
+      "errors": 0,
+      "actionFailureRate": 1.1765,
+      "currentStreak": {
+        "kind": "win",
+        "count": 1
+      },
+      "liveStatus": {
+        "state": "choosing",
+        "label": "Choosing",
+        "updatedAt": "2026-06-17T16:38:24.917Z",
+        "lastEvent": "choosing on turn 14",
+        "battleRoomId": "battle-gen9championsou-2633929095",
+        "battleStartedAt": "2026-06-17T16:33:31.375Z",
+        "battleTurns": 14,
+        "opponent": {
+          "sideId": "p2",
+          "username": "jehshshshs",
+          "ratingBefore": 1000
+        },
+        "gamesCompleted": 1
+      },
+      "lastBattleAt": "2026-06-17T16:33:25.697Z",
+      "uniqueOpponents": 1,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
+        },
+        {
+          "battle": 1,
+          "rating": 1000,
+          "at": "2026-06-17T16:28:05.026Z",
+          "source": "battle-start"
+        },
+        {
+          "battle": 1,
+          "rating": 1016,
+          "at": "2026-06-17T16:33:25.697Z",
+          "source": "estimated-final",
+          "outcome": "win",
+          "ratingBefore": 1000,
+          "opponentRating": 1000,
+          "delta": 16
+        }
+      ]
+    },
+    {
       "id": "o3",
       "name": "OpenAI o3",
       "type": "openai",
@@ -1187,62 +1259,6 @@
           "ratingBefore": 1007,
           "opponentRating": 1000,
           "delta": -7
-        }
-      ]
-    },
-    {
-      "id": "gpt-5.5-high",
-      "name": "OpenAI GPT-5.5 High",
-      "type": "openai",
-      "model": "gpt-5.5",
-      "reasoningEffort": "high",
-      "teamSource": "openai-generated",
-      "rating": 1000,
-      "benchmarkRating": 1000,
-      "ratingSource": "initial",
-      "ratingDelta": null,
-      "ratingDeltaSource": null,
-      "ratingDeltaPrevious": null,
-      "peakRating": 1000,
-      "floorRating": 1000,
-      "games": 0,
-      "wins": 0,
-      "losses": 0,
-      "ties": 0,
-      "winRate": 0,
-      "averageTurns": 0,
-      "choices": 0,
-      "invalidActions": 0,
-      "timeouts": 0,
-      "errors": 0,
-      "actionFailureRate": 0,
-      "currentStreak": {
-        "kind": "none",
-        "count": 0
-      },
-      "liveStatus": {
-        "state": "choosing",
-        "label": "Choosing",
-        "updatedAt": "2026-06-17T16:32:33.831Z",
-        "lastEvent": "choosing on turn 12",
-        "battleRoomId": "battle-gen9championsou-2633926296-mn1dfnx13rokwhthsvhosh3tl7fc416pw",
-        "battleStartedAt": "2026-06-17T16:28:05.026Z",
-        "battleTurns": 12,
-        "opponent": {
-          "sideId": "p1",
-          "username": "lalithnag77",
-          "ratingBefore": 1000
-        },
-        "gamesCompleted": 0
-      },
-      "lastBattleAt": null,
-      "uniqueOpponents": 0,
-      "ratingHistory": [
-        {
-          "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
         }
       ]
     }
