@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T16:53:52.461Z",
+  "generatedAt": "2026-06-17T16:54:37.798Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T16:53:52.461Z",
+    "generatedAt": "2026-06-17T16:54:37.798Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -30,7 +30,7 @@
   "totalGames": 167,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T16:53:52.461Z",
+    "generatedAt": "2026-06-17T16:54:37.798Z",
     "lastBattleAt": "2026-06-17T16:50:53.878Z",
     "activePlayers": 5,
     "totalPlayers": 5
@@ -1051,13 +1051,13 @@
         "count": 2
       },
       "liveStatus": {
-        "state": "choosing",
-        "label": "Choosing",
-        "updatedAt": "2026-06-17T16:53:49.203Z",
-        "lastEvent": "choosing on turn 10",
+        "state": "sent-choice",
+        "label": "Sent Choice",
+        "updatedAt": "2026-06-17T16:54:36.244Z",
+        "lastEvent": "sent move 3",
         "battleRoomId": "battle-gen9championsou-2633937931-2jaefif8rcej6j2opbp81ccdyxx1ckwpw",
         "battleStartedAt": "2026-06-17T16:50:59.510Z",
-        "battleTurns": 10,
+        "battleTurns": 12,
         "opponent": {
           "sideId": "p2",
           "username": "felipelimaolimpio",
