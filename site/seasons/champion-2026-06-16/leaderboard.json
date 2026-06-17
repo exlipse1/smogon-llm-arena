@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T16:38:28.052Z",
+  "generatedAt": "2026-06-17T16:53:52.461Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T16:38:28.052Z",
+    "generatedAt": "2026-06-17T16:53:52.461Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -27,11 +27,11 @@
     "liveRatingFloor": 1000,
     "liveSource": "Pokemon Showdown public ladder rating observed at battle start, plus estimated final point"
   },
-  "totalGames": 165,
+  "totalGames": 167,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T16:38:28.052Z",
-    "lastBattleAt": "2026-06-17T16:33:25.697Z",
+    "generatedAt": "2026-06-17T16:53:52.461Z",
+    "lastBattleAt": "2026-06-17T16:50:53.878Z",
     "activePlayers": 5,
     "totalPlayers": 5
   },
@@ -1027,46 +1027,46 @@
       "model": "gpt-5.5",
       "reasoningEffort": "high",
       "teamSource": "openai-generated",
-      "rating": 1016,
-      "benchmarkRating": 1016,
+      "rating": 1005,
+      "benchmarkRating": 1005,
       "ratingSource": "estimated-final",
-      "ratingDelta": 16,
+      "ratingDelta": -17,
       "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1000,
-      "peakRating": 1016,
+      "ratingDeltaPrevious": 1022,
+      "peakRating": 1040,
       "floorRating": 1000,
-      "games": 1,
+      "games": 3,
       "wins": 1,
-      "losses": 0,
+      "losses": 2,
       "ties": 0,
-      "winRate": 1,
-      "averageTurns": 14,
-      "choices": 17,
-      "invalidActions": 10,
-      "timeouts": 10,
+      "winRate": 0.3333,
+      "averageTurns": 19.3,
+      "choices": 71,
+      "invalidActions": 39,
+      "timeouts": 38,
       "errors": 0,
-      "actionFailureRate": 1.1765,
+      "actionFailureRate": 1.0845,
       "currentStreak": {
-        "kind": "win",
-        "count": 1
+        "kind": "loss",
+        "count": 2
       },
       "liveStatus": {
         "state": "choosing",
         "label": "Choosing",
-        "updatedAt": "2026-06-17T16:38:24.917Z",
-        "lastEvent": "choosing on turn 14",
-        "battleRoomId": "battle-gen9championsou-2633929095",
-        "battleStartedAt": "2026-06-17T16:33:31.375Z",
-        "battleTurns": 14,
+        "updatedAt": "2026-06-17T16:53:49.203Z",
+        "lastEvent": "choosing on turn 10",
+        "battleRoomId": "battle-gen9championsou-2633937931-2jaefif8rcej6j2opbp81ccdyxx1ckwpw",
+        "battleStartedAt": "2026-06-17T16:50:59.510Z",
+        "battleTurns": 10,
         "opponent": {
           "sideId": "p2",
-          "username": "jehshshshs",
+          "username": "felipelimaolimpio",
           "ratingBefore": 1000
         },
-        "gamesCompleted": 1
+        "gamesCompleted": 3
       },
-      "lastBattleAt": "2026-06-17T16:33:25.697Z",
-      "uniqueOpponents": 1,
+      "lastBattleAt": "2026-06-17T16:50:53.878Z",
+      "uniqueOpponents": 3,
       "ratingHistory": [
         {
           "battle": 0,
@@ -1081,14 +1081,26 @@
           "source": "battle-start"
         },
         {
-          "battle": 1,
-          "rating": 1016,
-          "at": "2026-06-17T16:33:25.697Z",
+          "battle": 2,
+          "rating": 1040,
+          "at": "2026-06-17T16:33:31.375Z",
+          "source": "battle-start"
+        },
+        {
+          "battle": 3,
+          "rating": 1022,
+          "at": "2026-06-17T16:45:12.000Z",
+          "source": "battle-start"
+        },
+        {
+          "battle": 3,
+          "rating": 1005,
+          "at": "2026-06-17T16:50:53.878Z",
           "source": "estimated-final",
-          "outcome": "win",
-          "ratingBefore": 1000,
+          "outcome": "loss",
+          "ratingBefore": 1022,
           "opponentRating": 1000,
-          "delta": 16
+          "delta": -17
         }
       ]
     },

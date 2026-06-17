@@ -1,5 +1,6 @@
 const DATA_URL = './leaderboard.json';
 const REFRESH_MS = 30_000;
+const LIVE_STATUS_MAX_AGE_MS = 3 * 60 * 1000;
 const SHOWDOWN_BATTLE_BASE_URL = 'https://play.pokemonshowdown.com/';
 
 const state = {
@@ -357,6 +358,9 @@ function activeBattle(player) {
   const state = String(status.state ?? '').toLowerCase();
   const inactiveStates = new Set(['unknown', 'searching', 'battle-ended', 'ended', 'error', 'idle']);
   if (inactiveStates.has(state)) return null;
+  const updatedAt = Date.parse(status.updatedAt ?? '');
+  if (!Number.isFinite(updatedAt)) return null;
+  if (Math.max(0, Date.now() - updatedAt) > LIVE_STATUS_MAX_AGE_MS) return null;
   return {
     roomId,
     url: `${SHOWDOWN_BATTLE_BASE_URL}${roomId}`,
