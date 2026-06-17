@@ -1,0 +1,38 @@
+{
+  "name": "smogon-llm-arena",
+  "version": "0.1.0",
+  "description": "LLM benchmark for 6v6 Smogon singles in frozen Champions OU.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "smogon-llm-arena": "./src/cli.js"
+  },
+  "scripts": {
+    "setup": "pnpm install && node ./scripts/build-showdown.mjs",
+    "build:showdown": "node ./scripts/build-showdown.mjs",
+    "benchmark": "node ./src/cli.js",
+    "gpt55": "node ./scripts/run-gpt55.mjs",
+    "teams:openai": "node ./scripts/build-openai-roster-teams.mjs",
+    "ladder:smoke": "node ./src/cli.js ladder --manifest config/ladder.smoke.json --games 4 --state results/ladder-smoke/state.json --matches results/ladder-smoke/matches.jsonl --site site/leaderboard.json",
+    "live:ladder": "node ./src/cli.js live-ladder",
+    "live:roster": "node ./scripts/run-live-roster.mjs",
+    "live:check-logins": "node ./scripts/check-showdown-logins.mjs",
+    "activate:live": "node ./scripts/activate-live-benchmark.mjs",
+    "start:live": "node ./scripts/start-live-benchmark.mjs",
+    "publish:live": "node ./src/cli.js publish-live",
+    "doctor": "node ./src/cli.js doctor",
+    "verify": "node ./scripts/verify-benchmark.mjs",
+    "site:check": "node ./scripts/check-site.mjs",
+    "serve:site": "node ./scripts/serve-site.mjs site 4173",
+    "freeze:check": "node ./src/cli.js freeze-check",
+    "validate": "node ./src/cli.js validate-team",
+    "smoke": "node ./test/smoke.mjs",
+    "smoke:live": "node ./test/live-ladder-mock.mjs"
+  },
+  "dependencies": {
+    "pokemon-showdown": "github:smogon/pokemon-showdown#8d3a9807d08f9a49845dd8d568e6bb0da08c978d"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

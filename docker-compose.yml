@@ -1,0 +1,39 @@
+services:
+  arena-runner:
+    build: .
+    env_file:
+      - .env
+    command:
+      - node
+      - scripts/activate-live-benchmark.mjs
+      - --manifest
+      - config/ladder.openai.example.json
+      - --matches-dir
+      - results/live-ladder
+      - --site
+      - site/leaderboard.json
+      - --start
+      - --continuous
+      - --poll-ratings
+      - --publish-interval-ms
+      - "30000"
+    restart: unless-stopped
+    volumes:
+      - ./data/teams:/app/data/teams
+      - ./results:/app/results
+      - ./site:/app/site
+
+  arena-site:
+    build: .
+    command:
+      - node
+      - scripts/serve-site.mjs
+      - site
+      - "4173"
+    restart: unless-stopped
+    ports:
+      - "4173:4173"
+    volumes:
+      - ./site:/app/site:ro
+    depends_on:
+      - arena-runner

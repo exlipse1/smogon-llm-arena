@@ -1,0 +1,18 @@
+{
+  "name": "champions-ou-local-smoke",
+  "format": "[Gen 9 Champions] OU",
+  "gamesPerPairing": 2,
+  "seed": 20260616,
+  "players": [
+    {
+      "id": "random-baseline",
+      "type": "random",
+      "teamFile": "data/teams/baseline.txt"
+    },
+    {
+      "id": "heuristic-baseline",
+      "type": "heuristic",
+      "teamFile": "data/teams/baseline-alt.txt"
+    }
+  ]
+}

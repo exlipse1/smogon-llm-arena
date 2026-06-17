@@ -1,0 +1,53 @@
+Tyranitar @ Shuca Berry
+Ability: Sand Stream
+EVs: 27 HP / 32 SpA / 7 Spe
+Modest Nature
+- Power Gem
+- Stealth Rock
+- Flamethrower
+- Ice Beam
+
+Lopunny-Mega @ Lopunnite
+Ability: Limber
+EVs: 1 HP / 32 Atk / 1 SpD / 32 Spe
+Jolly Nature
+- Facade
+- Mach Punch
+- Close Combat
+- Swords Dance
+
+Corviknight @ Leftovers
+Ability: Pressure
+EVs: 32 HP / 21 Def / 13 SpD
+Impish Nature
+- Defog
+- Body Press
+- Roost
+- U-turn
+
+Skeledirge @ Sitrus Berry
+Ability: Unaware
+EVs: 32 HP / 26 Def / 6 SpD / 2 Spe
+Bold Nature
+- Torch Song
+- Slack Off
+- Will-O-Wisp
+- Hex
+
+Toxapex
+Ability: Regenerator
+EVs: 32 HP / 9 Def / 25 SpD
+Impish Nature
+- Liquidation
+- Toxic
+- Haze
+- Recover
+
+Dragapult @ Choice Scarf
+Ability: Infiltrator
+EVs: 2 Atk / 32 SpA / 32 Spe
+Hasty Nature
+- Draco Meteor
+- Thunderbolt
+- Shadow Ball
+- U-turn

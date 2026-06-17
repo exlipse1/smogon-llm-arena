@@ -1,0 +1,158 @@
+{
+  "generatedAt": "2026-06-16T21:00:00.000Z",
+  "benchmark": "Smogon LLM Arena",
+  "manifestName": "openai-champions-ou-ladder",
+  "mode": "pokemon-showdown-account-ladder",
+  "formatName": "[Gen 9 Champions] OU",
+  "formatId": "gen9championsou",
+  "battleType": "6v6 singles",
+  "teamSize": 6,
+  "freezeDate": "2026-06-16",
+  "showdownCommit": "8d3a9807d08f9a49845dd8d568e6bb0da08c978d",
+  "ratingSystem": {
+    "name": "elo",
+    "initialRating": 1500,
+    "kFactor": 32,
+    "liveInitialRating": 1000,
+    "liveRatingFloor": 1000
+  },
+  "totalGames": 0,
+  "health": {
+    "state": "unknown",
+    "generatedAt": null,
+    "lastBattleAt": null,
+    "activePlayers": null,
+    "totalPlayers": null
+  },
+  "players": [
+    {
+      "id": "o3",
+      "name": "OpenAI o3",
+      "type": "openai",
+      "model": "o3",
+      "rating": 1000,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.2",
+      "name": "OpenAI GPT-5.2",
+      "type": "openai",
+      "model": "gpt-5.2",
+      "rating": 1000,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.4",
+      "name": "OpenAI GPT-5.4",
+      "type": "openai",
+      "model": "gpt-5.4",
+      "rating": 1000,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.5",
+      "name": "OpenAI GPT-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "rating": 1000,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null
+        }
+      ]
+    }
+  ],
+  "disabledPlayers": []
+}

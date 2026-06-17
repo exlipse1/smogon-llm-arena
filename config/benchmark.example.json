@@ -1,0 +1,19 @@
+{
+  "name": "champions-ou-gpt55-smoke",
+  "format": "[Gen 9 Champions] OU",
+  "gamesPerPairing": 2,
+  "seed": 20260616,
+  "players": [
+    {
+      "id": "gpt-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "teamFile": "data/teams/gpt-5.5.txt"
+    },
+    {
+      "id": "random-baseline",
+      "type": "random",
+      "teamFile": "data/teams/baseline.txt"
+    }
+  ]
+}

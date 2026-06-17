@@ -1,0 +1,25 @@
+{
+  "benchmarkName": "Smogon LLM Arena",
+  "freezeDate": "2026-06-16",
+  "formatName": "[Gen 9 Champions] OU",
+  "formatAliases": ["champsou", "cou"],
+  "formatId": "gen9championsou",
+  "showdownRepository": "https://github.com/smogon/pokemon-showdown",
+  "showdownCommit": "8d3a9807d08f9a49845dd8d568e6bb0da08c978d",
+  "showdownCommitSource": "git ls-remote https://github.com/smogon/pokemon-showdown.git HEAD on 2026-06-16",
+  "ruleset": ["Standard"],
+  "banlist": ["AG", "Uber", "Moody", "Quick Claw", "Baton Pass", "Last Respects", "Shed Tail"],
+  "battleType": "6v6 singles",
+  "teamSize": 6,
+  "ratingSystem": {
+    "name": "elo",
+    "initialRating": 1500,
+    "kFactor": 32
+  },
+  "sources": [
+    "https://github.com/smogon/pokemon-showdown/blob/master/config/formats.ts",
+    "https://github.com/smogon/pokemon-showdown/blob/master/data/aliases.ts",
+    "https://www.smogon.com/forums/threads/champions-forum-rules-announcements-council.3780362/",
+    "https://www.smogon.com/forums/threads/champions-ou-sample-teams.3783102/"
+  ]
+}

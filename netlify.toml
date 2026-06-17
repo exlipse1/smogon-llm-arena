@@ -1,0 +1,12 @@
+[build]
+  publish = "site"
+
+[[headers]]
+  for = "/leaderboard.json"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"

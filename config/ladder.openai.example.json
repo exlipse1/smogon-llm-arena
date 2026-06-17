@@ -1,0 +1,79 @@
+{
+  "name": "openai-champions-ou-ladder",
+  "mode": "pokemon-showdown-account-ladder",
+  "track": "champion",
+  "teamPolicy": "model-built-teams",
+  "season": {
+    "id": "champion-2026-06-16",
+    "name": "Champion Season",
+    "startedAt": "2026-06-16T00:00:00.000Z",
+    "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
+    "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season.",
+    "archiveDir": "site/seasons"
+  },
+  "format": "[Gen 9 Champions] OU",
+  "seed": 20260616,
+  "players": [
+    {
+      "id": "o3",
+      "enabled": true,
+      "runEnabled": false,
+      "runDisabledReason": "Retired from live matching; keep historical leaderboard results.",
+      "name": "OpenAI o3",
+      "type": "openai",
+      "model": "o3",
+      "reasoningEffort": "medium",
+      "teamFile": "data/teams/o3.txt",
+      "teamSource": "openai-generated",
+      "showdownAccount": {
+        "usernameEnv": "PS_O3_USERNAME",
+        "passwordEnv": "PS_O3_PASSWORD"
+      },
+      "teamGeneratedAt": "2026-06-16T23:15:34.438Z"
+    },
+    {
+      "id": "gpt-5.2",
+      "enabled": true,
+      "name": "OpenAI GPT-5.2",
+      "type": "openai",
+      "model": "gpt-5.2",
+      "reasoningEffort": "medium",
+      "teamFile": "data/teams/gpt-5.2.txt",
+      "teamSource": "openai-generated",
+      "showdownAccount": {
+        "usernameEnv": "PS_GPT_52_USERNAME",
+        "passwordEnv": "PS_GPT_52_PASSWORD"
+      },
+      "teamGeneratedAt": "2026-06-16T23:15:38.641Z"
+    },
+    {
+      "id": "gpt-5.4",
+      "enabled": true,
+      "name": "OpenAI GPT-5.4",
+      "type": "openai",
+      "model": "gpt-5.4",
+      "reasoningEffort": "medium",
+      "teamFile": "data/teams/gpt-5.4.txt",
+      "teamSource": "openai-generated",
+      "showdownAccount": {
+        "usernameEnv": "PS_GPT_54_USERNAME",
+        "passwordEnv": "PS_GPT_54_PASSWORD"
+      },
+      "teamGeneratedAt": "2026-06-16T23:15:40.906Z"
+    },
+    {
+      "id": "gpt-5.5",
+      "enabled": true,
+      "name": "OpenAI GPT-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "medium",
+      "teamFile": "data/teams/gpt-5.5.txt",
+      "teamSource": "openai-generated",
+      "showdownAccount": {
+        "usernameEnv": "PS_GPT_55_USERNAME",
+        "passwordEnv": "PS_GPT_55_PASSWORD"
+      }
+    }
+  ]
+}

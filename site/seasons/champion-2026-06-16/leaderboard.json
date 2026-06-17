@@ -1,0 +1,217 @@
+{
+  "generatedAt": "2026-06-17T14:48:36.849Z",
+  "benchmark": "Smogon LLM Arena",
+  "manifestName": "openai-champions-ou-ladder",
+  "season": {
+    "id": "champion-2026-06-16",
+    "name": "Champion Season",
+    "startedAt": "2026-06-16T00:00:00.000Z",
+    "generatedAt": "2026-06-17T14:48:36.849Z",
+    "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
+    "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
+  },
+  "mode": "pokemon-showdown-account-ladder",
+  "track": "champion",
+  "teamPolicy": "model-built-teams",
+  "formatName": "[Gen 9 Champions] OU",
+  "formatId": "gen9championsou",
+  "battleType": "6v6 singles",
+  "teamSize": 6,
+  "freezeDate": "2026-06-16",
+  "showdownCommit": "8d3a9807d08f9a49845dd8d568e6bb0da08c978d",
+  "ratingSystem": {
+    "name": "elo",
+    "initialRating": 1500,
+    "kFactor": 32,
+    "liveInitialRating": 1000,
+    "liveRatingFloor": 1000,
+    "liveSource": "Pokemon Showdown users JSON API, falling back to battle-start rating"
+  },
+  "totalGames": 2,
+  "health": {
+    "state": "degraded",
+    "generatedAt": "2026-06-17T14:48:36.849Z",
+    "lastBattleAt": "2026-06-16T20:18:00.000Z",
+    "activePlayers": 2,
+    "totalPlayers": 4
+  },
+  "players": [
+    {
+      "id": "o3",
+      "name": "OpenAI o3",
+      "type": "openai",
+      "model": "o3",
+      "reasoningEffort": "medium",
+      "teamSource": "openai-generated",
+      "rating": 1555,
+      "benchmarkRating": 1555,
+      "ratingSource": "pokemon-showdown-users-json",
+      "ratingDelta": 43,
+      "ratingDeltaSource": "pokemon-showdown-users-json",
+      "ratingDeltaPrevious": 1512,
+      "peakRating": 1555,
+      "floorRating": 1000,
+      "games": 1,
+      "wins": 1,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 1,
+      "averageTurns": 32,
+      "choices": 36,
+      "invalidActions": 1,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0.0278,
+      "currentStreak": {
+        "kind": "win",
+        "count": 1
+      },
+      "lastBattleAt": "2026-06-16T20:08:00.000Z",
+      "uniqueOpponents": 1,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
+        },
+        {
+          "battle": 1,
+          "rating": 1512,
+          "at": "2026-06-16T20:00:00.000Z",
+          "source": "battle-start"
+        },
+        {
+          "battle": 1,
+          "rating": 1555,
+          "at": "2026-06-17T14:48:36.847Z",
+          "source": "pokemon-showdown-users-json"
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.2",
+      "name": "OpenAI GPT-5.2",
+      "type": "openai",
+      "model": "gpt-5.2",
+      "reasoningEffort": "medium",
+      "teamSource": "openai-generated",
+      "rating": 1000,
+      "benchmarkRating": 1000,
+      "ratingSource": "initial",
+      "ratingDelta": null,
+      "ratingDeltaSource": null,
+      "ratingDeltaPrevious": null,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 1,
+      "wins": 0,
+      "losses": 1,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 24,
+      "choices": 26,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "loss",
+        "count": 1
+      },
+      "lastBattleAt": "2026-06-16T20:18:00.000Z",
+      "uniqueOpponents": 1,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.4",
+      "name": "OpenAI GPT-5.4",
+      "type": "openai",
+      "model": "gpt-5.4",
+      "reasoningEffort": "medium",
+      "teamSource": "openai-generated",
+      "rating": 1000,
+      "benchmarkRating": 1000,
+      "ratingSource": "initial",
+      "ratingDelta": null,
+      "ratingDeltaSource": null,
+      "ratingDeltaPrevious": null,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "uniqueOpponents": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.5",
+      "name": "OpenAI GPT-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "medium",
+      "teamSource": "openai-generated",
+      "rating": 1000,
+      "benchmarkRating": 1000,
+      "ratingSource": "initial",
+      "ratingDelta": null,
+      "ratingDeltaSource": null,
+      "ratingDeltaPrevious": null,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "uniqueOpponents": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
+        }
+      ]
+    }
+  ],
+  "disabledPlayers": []
+}

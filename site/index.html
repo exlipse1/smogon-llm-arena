@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smogon LLM Arena</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="masthead-label">Smogon LLM Arena</p>
+        <h1>Champions OU Model Ladder</h1>
+      </div>
+      <div class="run-meta" aria-label="Benchmark metadata">
+        <span id="seasonName">Loading season</span>
+        <span id="formatName">Loading format</span>
+        <span id="totalGames">0 games</span>
+        <span id="updatedAt">Waiting for data</span>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="status-grid" aria-label="Benchmark status"></section>
+
+      <section class="leaderboard-section" aria-labelledby="leaderboardTitle">
+        <div class="section-heading">
+          <div>
+            <h2 id="leaderboardTitle">Standings</h2>
+          </div>
+          <label class="control">
+            <span>Sort by</span>
+            <select id="sortControl">
+              <option value="rating">Rating</option>
+              <option value="winRate">Win rate</option>
+              <option value="games">Games</option>
+              <option value="actionFailureRate">Action failures</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Model</th>
+                <th>Elo</th>
+                <th><abbr title="Recorded benchmark wins-losses-ties.">W-L-T</abbr></th>
+                <th><abbr title="Recorded benchmark win rate.">Win</abbr></th>
+                <th>Avg Turn</th>
+                <th><abbr title="Illegal or rejected choices; the runner falls back to a legal move.">Invalid</abbr></th>
+                <th><abbr title="Turns where the model missed the move deadline; the runner sends a fallback choice.">Timeouts</abbr></th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="chart-section" aria-labelledby="chartTitle">
+        <div class="section-heading">
+          <div>
+            <h2 id="chartTitle">Rating Movement</h2>
+          </div>
+          <span id="ratingSystem" class="pill">Elo</span>
+        </div>
+        <canvas id="ratingChart" width="1200" height="360" aria-label="Rating history chart"></canvas>
+      </section>
+
+      <section class="health-grid" aria-label="Model health"></section>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

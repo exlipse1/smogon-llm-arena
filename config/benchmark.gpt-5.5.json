@@ -1,0 +1,24 @@
+{
+  "name": "champions-ou-gpt-5.5",
+  "format": "[Gen 9 Champions] OU",
+  "gamesPerPairing": 4,
+  "seed": 20260616,
+  "players": [
+    {
+      "id": "gpt-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "teamFile": "data/teams/gpt-5.5.txt"
+    },
+    {
+      "id": "heuristic-baseline",
+      "type": "heuristic",
+      "teamFile": "data/teams/baseline.txt"
+    },
+    {
+      "id": "random-baseline",
+      "type": "random",
+      "teamFile": "data/teams/baseline-alt.txt"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "champions-ou-local-smoke-ladder",
+  "mode": "local-shadow-ladder",
+  "format": "[Gen 9 Champions] OU",
+  "seed": 20260616,
+  "players": [
+    {
+      "id": "heuristic-baseline",
+      "name": "Heuristic Baseline",
+      "type": "heuristic",
+      "teamFile": "data/teams/baseline.txt"
+    },
+    {
+      "id": "random-baseline",
+      "name": "Random Baseline",
+      "type": "random",
+      "teamFile": "data/teams/baseline-alt.txt"
+    }
+  ]
+}
