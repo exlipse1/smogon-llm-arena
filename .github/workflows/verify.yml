@@ -22,6 +22,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build Pokemon Showdown
+        run: pnpm run build:showdown
+
       - name: Verify benchmark bundle
         run: |
           node --check src/cli.js
