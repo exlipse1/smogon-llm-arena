@@ -220,6 +220,7 @@ function publicPlayerView(player) {
     errors: player.errors,
     actionFailureRate: player.actionFailureRate,
     currentStreak: player.currentStreak,
+    liveStatus: player.liveStatus,
     lastBattleAt: player.lastBattleAt,
     uniqueOpponents: player.uniqueOpponents,
     ratingHistory: player.ratingHistory ?? [],

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T16:25:54.786Z",
+  "generatedAt": "2026-06-17T16:32:37.751Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T16:25:54.786Z",
+    "generatedAt": "2026-06-17T16:32:37.751Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -30,7 +30,7 @@
   "totalGames": 164,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T16:25:54.786Z",
+    "generatedAt": "2026-06-17T16:32:37.751Z",
     "lastBattleAt": "2026-06-17T06:53:32.633Z",
     "activePlayers": 4,
     "totalPlayers": 5
@@ -65,6 +65,17 @@
       "currentStreak": {
         "kind": "loss",
         "count": 2
+      },
+      "liveStatus": {
+        "state": "error",
+        "label": "Error",
+        "updatedAt": "2026-06-17T12:33:11.913Z",
+        "lastEvent": "post-quota games removed; paused at clean game 34",
+        "battleRoomId": null,
+        "battleStartedAt": null,
+        "battleTurns": null,
+        "opponent": null,
+        "gamesCompleted": 34
       },
       "lastBattleAt": "2026-06-17T06:52:46.346Z",
       "uniqueOpponents": 32,
@@ -320,6 +331,17 @@
       "currentStreak": {
         "kind": "win",
         "count": 1
+      },
+      "liveStatus": {
+        "state": "error",
+        "label": "Error",
+        "updatedAt": "2026-06-17T12:33:11.902Z",
+        "lastEvent": "post-quota games removed; paused at clean game 57",
+        "battleRoomId": null,
+        "battleStartedAt": null,
+        "battleTurns": null,
+        "opponent": null,
+        "gamesCompleted": 57
       },
       "lastBattleAt": "2026-06-17T06:51:58.149Z",
       "uniqueOpponents": 48,
@@ -678,6 +700,17 @@
         "kind": "loss",
         "count": 1
       },
+      "liveStatus": {
+        "state": "error",
+        "label": "Error",
+        "updatedAt": "2026-06-17T12:33:11.910Z",
+        "lastEvent": "post-quota games removed; paused at clean game 50",
+        "battleRoomId": null,
+        "battleStartedAt": null,
+        "battleTurns": null,
+        "opponent": null,
+        "gamesCompleted": 50
+      },
       "lastBattleAt": "2026-06-17T06:53:32.633Z",
       "uniqueOpponents": 45,
       "ratingHistory": [
@@ -1017,6 +1050,17 @@
         "kind": "loss",
         "count": 5
       },
+      "liveStatus": {
+        "state": "stopped",
+        "label": "Stopped",
+        "updatedAt": "2026-06-17T04:21:12.000Z",
+        "lastEvent": "stopped by operator; history retained",
+        "battleRoomId": null,
+        "battleStartedAt": null,
+        "battleTurns": null,
+        "opponent": null,
+        "gamesCompleted": 4
+      },
       "lastBattleAt": "2026-06-17T04:17:23.438Z",
       "uniqueOpponents": 21,
       "ratingHistory": [
@@ -1175,6 +1219,21 @@
       "currentStreak": {
         "kind": "none",
         "count": 0
+      },
+      "liveStatus": {
+        "state": "choosing",
+        "label": "Choosing",
+        "updatedAt": "2026-06-17T16:32:33.831Z",
+        "lastEvent": "choosing on turn 12",
+        "battleRoomId": "battle-gen9championsou-2633926296-mn1dfnx13rokwhthsvhosh3tl7fc416pw",
+        "battleStartedAt": "2026-06-17T16:28:05.026Z",
+        "battleTurns": 12,
+        "opponent": {
+          "sideId": "p1",
+          "username": "lalithnag77",
+          "ratingBefore": 1000
+        },
+        "gamesCompleted": 0
       },
       "lastBattleAt": null,
       "uniqueOpponents": 0,

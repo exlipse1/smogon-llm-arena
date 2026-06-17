@@ -1,4 +1,6 @@
 const DATA_URL = './leaderboard.json';
+const REFRESH_MS = 30_000;
+const SHOWDOWN_BATTLE_BASE_URL = 'https://play.pokemonshowdown.com/';
 
 const state = {
   data: null,
@@ -39,6 +41,8 @@ async function load() {
   }
 }
 
+setInterval(load, REFRESH_MS);
+
 async function fetchJson(url) {
   const response = await fetch(`${url}?t=${Date.now()}`);
   if (!response.ok) {
@@ -61,6 +65,7 @@ function render() {
   document.getElementById('lastBattle').textContent = formatDate(data.health?.lastBattleAt ?? data.generatedAt);
 
   renderScoreline(players);
+  renderLiveMatches(players);
   renderLeaderboard(players);
   renderChartLegend(players);
   drawChart(players);
@@ -102,7 +107,7 @@ function renderScoreline(players) {
 function renderLeaderboard(players) {
   const tbody = document.getElementById('leaderboardBody');
   if (!players.length) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No matches recorded yet.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No matches recorded yet.</td></tr>';
     return;
   }
 
@@ -125,11 +130,36 @@ function renderLeaderboard(players) {
         <td>${deltaCell(delta)}</td>
         <td>${recordCell(player)}</td>
         <td>${winRateCell(player)}</td>
+        <td>${watchCell(player)}</td>
         <td>${formatNumber(player.averageTurns)}</td>
         <td>${formatNumber(totalMisses(player))}</td>
       </tr>
     `;
   }).join('');
+}
+
+function renderLiveMatches(players) {
+  const section = document.querySelector('.live-section');
+  const list = document.getElementById('liveMatches');
+  const active = players
+    .map(player => ({player, battle: activeBattle(player)}))
+    .filter(entry => entry.battle);
+
+  section.hidden = active.length === 0;
+  if (!active.length) {
+    list.innerHTML = '';
+    return;
+  }
+
+  list.innerHTML = active.map(({player, battle}, index) => `
+    <a class="live-match" style="--accent:${colorForPlayer(player, index)}" href="${battle.url}" target="_blank" rel="noopener noreferrer">
+      <span>
+        <strong>${escapeHtml(displayName(player))}</strong>
+        <small>${escapeHtml(liveMatchLine(player))}</small>
+      </span>
+      <b>Watch</b>
+    </a>
+  `).join('');
 }
 
 function renderChartLegend(players) {
@@ -318,6 +348,32 @@ function buildBattleTicks(maxBattle) {
 
 function colorForPlayer(player, index) {
   return playerColors[player.id] ?? fallbackColors[index % fallbackColors.length];
+}
+
+function activeBattle(player) {
+  const status = player.liveStatus ?? {};
+  const roomId = String(status.battleRoomId ?? '');
+  if (!/^battle-[a-z0-9-]+$/i.test(roomId)) return null;
+  const state = String(status.state ?? '').toLowerCase();
+  const inactiveStates = new Set(['unknown', 'searching', 'battle-ended', 'ended', 'error', 'idle']);
+  if (inactiveStates.has(state)) return null;
+  return {
+    roomId,
+    url: `${SHOWDOWN_BATTLE_BASE_URL}${roomId}`,
+  };
+}
+
+function liveMatchLine(player) {
+  const status = player.liveStatus ?? {};
+  const opponent = status.opponent?.username ? `vs ${status.opponent.username}` : status.label ?? status.state ?? 'live';
+  const turn = Number(status.battleTurns ?? 0);
+  return turn > 0 ? `${opponent} / turn ${turn}` : opponent;
+}
+
+function watchCell(player) {
+  const battle = activeBattle(player);
+  if (!battle) return '<span class="watch-muted">-</span>';
+  return `<a class="watch-link" href="${battle.url}" target="_blank" rel="noopener noreferrer">Watch</a>`;
 }
 
 function displayName(player) {

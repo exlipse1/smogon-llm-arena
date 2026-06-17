@@ -207,6 +207,75 @@ main {
   opacity: 0.38;
 }
 
+.live-section {
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.live-section .section-heading {
+  border-bottom: 1px solid rgba(243, 246, 241, 0.18);
+}
+
+.live-section .section-kicker {
+  color: rgba(243, 246, 241, 0.62);
+}
+
+.live-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.live-match {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 44px;
+  border-right: 1px solid rgba(243, 246, 241, 0.18);
+  color: inherit;
+  text-decoration: none;
+}
+
+.live-match::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--accent);
+}
+
+.live-match:hover,
+.live-match:focus-visible {
+  background: rgba(243, 246, 241, 0.08);
+}
+
+.live-match strong,
+.live-match small {
+  display: block;
+}
+
+.live-match strong {
+  font-size: 1.05rem;
+  line-height: 1.15;
+}
+
+.live-match small {
+  margin-top: 5px;
+  color: rgba(243, 246, 241, 0.66);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.live-match b {
+  color: var(--paper);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
 .chart-section {
   margin: 0;
   overflow: hidden;
@@ -304,7 +373,7 @@ main {
 
 table {
   width: 100%;
-  min-width: 760px;
+  min-width: 840px;
   border-collapse: collapse;
 }
 
@@ -407,6 +476,26 @@ tbody tr:last-child td {
   color: var(--down);
 }
 
+.watch-link {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-transform: uppercase;
+}
+
+.watch-link:hover,
+.watch-link:focus-visible {
+  color: var(--up);
+}
+
+.watch-muted {
+  color: var(--muted);
+  font-weight: 900;
+}
+
 .empty-state {
   margin: 0;
   padding: 20px;
@@ -506,6 +595,17 @@ tbody tr:last-child td {
     flex-direction: column;
     padding-right: 18px;
     padding-left: 18px;
+  }
+
+  .live-list {
+    grid-template-columns: 1fr;
+  }
+
+  .live-match {
+    padding-right: 18px;
+    padding-left: 18px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(243, 246, 241, 0.18);
   }
 
   .chart-legend {

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Model Ladder</title>
-    <link rel="stylesheet" href="./styles.css?v=20260617-552">
+    <link rel="stylesheet" href="./styles.css?v=20260617-watch">
   </head>
   <body>
     <header class="masthead">
@@ -22,6 +22,16 @@
 
     <main class="dashboard">
       <section class="scoreline" aria-label="Current standings"></section>
+
+      <section class="live-section" aria-labelledby="liveTitle" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Live</p>
+            <h2 id="liveTitle">Watch Now</h2>
+          </div>
+        </div>
+        <div id="liveMatches" class="live-list"></div>
+      </section>
 
       <section class="chart-section" aria-labelledby="chartTitle">
         <div class="section-heading">
@@ -60,6 +70,7 @@
                 <th>Delta</th>
                 <th><abbr title="Recorded benchmark wins-losses-ties.">W-L-T</abbr></th>
                 <th><abbr title="Recorded benchmark win rate.">Win</abbr></th>
+                <th>Live</th>
                 <th>Pace</th>
                 <th><abbr title="Illegal, timeout, and runner fallback events.">Misses</abbr></th>
               </tr>
@@ -70,6 +81,6 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260617-552" type="module"></script>
+    <script src="./app.js?v=20260617-watch" type="module"></script>
   </body>
 </html>

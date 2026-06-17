@@ -169,6 +169,27 @@ await writeText('results/test-live/gpt-5.2.jsonl', `${JSON.stringify({
   turns: 24,
   stats: {choices: 26, invalidActions: 0, timeouts: 0, errors: 0},
 })}\n`);
+await writeText('results/test-live/status/o3.json', `${JSON.stringify({
+  source: 'pokemon-showdown-live',
+  playerId: 'o3',
+  model: 'o3',
+  reasoningEffort: 'medium',
+  accountUsername: 'PS_O3',
+  formatId: freeze.formatId,
+  gamesCompleted: 1,
+  state: 'choosing',
+  lastEvent: 'choosing on turn 4',
+  updatedAt: '2026-06-16T20:19:00.000Z',
+  searching: false,
+  battleRoomId: 'battle-gen9championsou-999-privatewatchid',
+  battleStartedAt: '2026-06-16T20:18:30.000Z',
+  battleTurns: 4,
+  opponent: {
+    sideId: 'p2',
+    username: 'ladder-user-2',
+    ratingBefore: 1501,
+  },
+})}\n`);
 const liveSnapshot = await publishLiveLeaderboard({
   manifestPath: 'config/ladder.openai.example.json',
   matchesDir: 'results/test-live',
@@ -184,6 +205,11 @@ assert.equal(o3.ratingDelta, 15);
 assert.equal(o3.account.username, 'PS_O3');
 assert.equal(o3.ratingHistory.at(-1).source, 'estimated-final');
 assert.equal(o3.ratingHistory.at(-1).delta, 15);
+assert.equal(o3.liveStatus.battleRoomId, 'battle-gen9championsou-999-privatewatchid');
+const publicLiveSnapshot = JSON.parse(await fs.readFile(fromRoot('site/leaderboard.json'), 'utf8'));
+const publicO3 = publicLiveSnapshot.players.find(player => player.id === 'o3');
+assert.equal(publicO3.liveStatus.battleRoomId, 'battle-gen9championsou-999-privatewatchid');
+assert.equal(publicO3.liveStatus.opponent.username, 'ladder-user-2');
 const gpt52 = liveSnapshot.players.find(player => player.id === 'gpt-5.2');
 assert.equal(gpt52.games, 1);
 assert.equal(gpt52.rating, 1000);
