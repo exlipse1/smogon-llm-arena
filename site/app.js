@@ -1,12 +1,22 @@
-const colorSet = ['#ef3e2d', '#007a78', '#6f4cc3', '#c08a00', '#1764ff', '#d5448b'];
-const chartRatingFloor = 1000;
+const DATA_URL = './leaderboard.json';
+
 const state = {
   data: null,
-  sortBy: 'rating',
+  sortKey: 'rating',
 };
 
-document.getElementById('sortControl').addEventListener('change', event => {
-  state.sortBy = event.target.value;
+const playerColors = {
+  'gpt-5.5': '#f05a28',
+  'gpt-5.2': '#007f73',
+  'gpt-5.4': '#7357c8',
+  o3: '#d19b1d',
+};
+
+const fallbackColors = ['#f05a28', '#007f73', '#7357c8', '#d19b1d', '#2f6fed'];
+
+const sortControl = document.getElementById('sortControl');
+sortControl?.addEventListener('change', event => {
+  state.sortKey = event.target.value;
   render();
 });
 
@@ -15,319 +25,375 @@ window.addEventListener('resize', () => {
   if (!state.data || chartResizeFrame !== null) return;
   chartResizeFrame = window.requestAnimationFrame(() => {
     chartResizeFrame = null;
-    drawChart([...state.data.players].sort(sortPlayers));
+    drawChart(sortPlayers(state.data.players ?? []));
   });
 });
 
-loadDashboard();
-
-async function loadDashboard() {
-  state.data = await fetchJson('./leaderboard.json').catch(() => fetchJson('./leaderboard.sample.json'));
-  render();
+async function load() {
+  try {
+    state.data = await fetchJson(DATA_URL).catch(() => fetchJson('./leaderboard.sample.json'));
+    render();
+  } catch (error) {
+    document.querySelector('.scoreline').innerHTML = `<p class="empty-state">Could not load leaderboard data: ${escapeHtml(error.message)}</p>`;
+  }
 }
 
 async function fetchJson(url) {
   const response = await fetch(`${url}?t=${Date.now()}`);
-  if (!response.ok) throw new Error(`Could not load ${url}`);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} for ${url}`);
+  }
   return response.json();
 }
 
 function render() {
   const data = state.data;
   if (!data) return;
-  const players = [...data.players].sort(sortPlayers);
-  document.getElementById('seasonName').textContent = data.season?.name ?? data.manifestName ?? 'Season';
-  document.getElementById('formatName').textContent = data.formatName;
-  document.getElementById('totalGames').textContent = `${data.totalGames} games`;
-  document.getElementById('updatedAt').textContent = `Updated ${formatDate(data.generatedAt)}`;
-  document.getElementById('ratingSystem').textContent = `${data.ratingSystem.name.toUpperCase()} K=${data.ratingSystem.kFactor}`;
-  renderStatus(data, players);
+
+  const players = sortPlayers(data.players ?? []);
+
+  document.getElementById('seasonName').textContent = data.season?.name ?? data.season ?? data.manifestName ?? 'Arena';
+  document.getElementById('formatName').textContent = data.formatName ?? data.format ?? data.formatId ?? 'Unknown';
+  document.getElementById('totalGames').textContent = String(data.totalGames ?? 0);
+  const updatedAt = document.getElementById('updatedAt');
+  if (updatedAt) updatedAt.textContent = `Updated ${formatDate(data.generatedAt)}`;
+  document.getElementById('lastBattle').textContent = formatDate(data.health?.lastBattleAt ?? data.generatedAt);
+
+  renderScoreline(players);
   renderLeaderboard(players);
-  renderHealth(players);
+  renderChartLegend(players);
   drawChart(players);
 }
 
-function renderStatus(data, players) {
-  const health = data.health ?? {};
-  const grid = document.querySelector('.status-grid');
-  const activePlayers = health.activePlayers ?? players.filter(player => player.games > 0).length;
-  const state = health.state ?? 'unknown';
-  const lastBattle = health.lastBattleAt ? formatDate(health.lastBattleAt) : 'none';
-  grid.innerHTML = `
-    <article class="status-card ${stateClass(state)}">
-      <span>Runner</span>
-      <strong>${titleCase(state)}</strong>
-    </article>
-    <article class="status-card">
-      <span>Active Models</span>
-      <strong>${activePlayers}/${players.length}</strong>
-    </article>
-    <article class="status-card">
-      <span>Last Battle</span>
-      <strong>${lastBattle}</strong>
-    </article>
-  `;
+function sortPlayers(players) {
+  return [...players].sort((a, b) => {
+    if (state.sortKey === 'actionFailureRate') {
+      return Number(a.actionFailureRate ?? 0) - Number(b.actionFailureRate ?? 0) || Number(b.rating ?? 0) - Number(a.rating ?? 0);
+    }
+    return Number(b[state.sortKey] ?? 0) - Number(a[state.sortKey] ?? 0) || Number(b.rating ?? 0) - Number(a.rating ?? 0);
+  });
+}
+
+function renderScoreline(players) {
+  const scoreline = document.querySelector('.scoreline');
+  if (!players.length) {
+    scoreline.innerHTML = '<p class="empty-state">No matches recorded yet.</p>';
+    return;
+  }
+
+  scoreline.innerHTML = players.map((player, index) => {
+    const accent = colorForPlayer(player, index);
+    return `
+      <article class="score-card" style="--accent:${accent}">
+        <div class="score-rank">#${index + 1}</div>
+        <h3>${escapeHtml(displayName(player))}</h3>
+        <div class="score-rating">${ratingCell(player.rating)}</div>
+        <div class="score-meta">
+          <span>${recordCell(player)}</span>
+          <span>${winRateCell(player)}</span>
+          <span>${escapeHtml(streakText(player.currentStreak))}</span>
+        </div>
+      </article>
+    `;
+  }).join('');
 }
 
 function renderLeaderboard(players) {
-  const body = document.getElementById('leaderboardBody');
-  body.innerHTML = players.map((player, index) => {
-    const delta = Number.isFinite(Number(player.ratingDelta)) ? Number(player.ratingDelta) : null;
-    const deltaMarkup = leaderboardDelta(delta);
-    const modelLabel = [player.model ?? player.type, player.reasoningEffort ? `reasoning ${player.reasoningEffort}` : null]
-      .filter(Boolean)
-      .join(' / ');
+  const tbody = document.getElementById('leaderboardBody');
+  if (!players.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No matches recorded yet.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = players.map((player, index) => {
+    const delta = Number(player.ratingDelta ?? 0);
+    const accent = colorForPlayer(player, index);
     return `
       <tr>
-        <td>${index + 1}</td>
+        <td class="rank-cell">${String(index + 1).padStart(2, '0')}</td>
         <td>
           <div class="model-cell">
-            <span class="rank-mark" style="background: ${colorFor(index)}"></span>
+            <span class="rank-mark" style="background:${accent}"></span>
             <span>
-              <strong>${escapeHtml(player.name)}</strong>
-              <span class="subtext">${escapeHtml(modelLabel)} · ${escapeHtml(player.teamSource ?? player.teamFile)}</span>
+              <strong>${escapeHtml(displayName(player))}</strong>
+              <span class="subtext">${escapeHtml(modelLine(player))}</span>
             </span>
           </div>
         </td>
-        <td><span class="rating">${player.rating}</span> ${deltaMarkup}</td>
+        <td><span class="rating">${ratingCell(player.rating)}</span></td>
+        <td>${deltaCell(delta)}</td>
         <td>${recordCell(player)}</td>
         <td>${winRateCell(player)}</td>
-        <td>${player.averageTurns}</td>
-        <td>${player.invalidActions}</td>
-        <td>${player.timeouts}</td>
+        <td>${formatNumber(player.averageTurns)}</td>
+        <td>${formatNumber(totalMisses(player))}</td>
       </tr>
     `;
   }).join('');
 }
 
-function renderHealth(players) {
-  const grid = document.querySelector('.health-grid');
-  grid.innerHTML = players.map((player, index) => `
-    <article class="health-card" style="--accent: ${colorFor(index)}">
-      <header>
-        <div>
-          <h3>${escapeHtml(player.name)}</h3>
-          <p>${escapeHtml(player.model ?? player.type)}${player.reasoningEffort ? ` / reasoning ${escapeHtml(player.reasoningEffort)}` : ''}</p>
-        </div>
-        <span>${streakText(player.currentStreak)}</span>
-      </header>
-      <div class="metric-row">
-        <div class="metric"><b>${player.peakRating}</b><span>Peak</span></div>
-        <div class="metric"><b>${percent(player.actionFailureRate)}</b><span>Action failures</span></div>
-      </div>
-    </article>
+function renderChartLegend(players) {
+  const legend = document.getElementById('chartLegend');
+  legend.innerHTML = players.map((player, index) => `
+    <span>
+      <i style="background:${colorForPlayer(player, index)}"></i>
+      ${escapeHtml(displayName(player))}
+    </span>
   `).join('');
-}
-
-function recordCell(player) {
-  return `${player.wins}-${player.losses}-${player.ties}`;
-}
-
-function winRateCell(player) {
-  return percent(player.winRate);
 }
 
 function drawChart(players) {
   const canvas = document.getElementById('ratingChart');
   const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  const {width, height} = resizeCanvas(canvas, ctx);
-  const padding = {top: 28, right: 34, bottom: 58, left: 82};
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = '#f4f6f8';
-  ctx.fillRect(0, 0, width, height);
-
-  const histories = players.map(player => cleanRatingHistory(player));
-  const points = histories.flat();
-  if (!points.length) return;
-  const maxBattle = Math.max(1, ...points.map(point => point.battle));
-  const {minRating, maxRating} = chartRatingDomain(points);
-
-  drawGrid(ctx, width, height, padding, minRating, maxRating, maxBattle);
-  players.forEach((player, index) => {
-    const history = histories[index] ?? [];
-    if (!history.length) return;
-    ctx.beginPath();
-    history.forEach((point, pointIndex) => {
-      const x = scale(point.battle, 0, maxBattle, padding.left, width - padding.right);
-      const y = scale(point.rating, minRating, maxRating, height - padding.bottom, padding.top);
-      if (pointIndex === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.strokeStyle = colorFor(index);
-    ctx.lineWidth = 2.75;
-    ctx.stroke();
-    const last = history[history.length - 1];
-    const lx = scale(last.battle, 0, maxBattle, padding.left, width - padding.right);
-    const ly = scale(last.rating, minRating, maxRating, height - padding.bottom, padding.top);
-    ctx.fillStyle = colorFor(index);
-    ctx.beginPath();
-    ctx.arc(lx, ly, 4.5, 0, Math.PI * 2);
-    ctx.fill();
-  });
-}
-
-function resizeCanvas(canvas, ctx) {
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  const width = Math.max(360, Math.round(rect.width || canvas.clientWidth || canvas.width));
-  const height = Math.max(300, Math.round(rect.height || canvas.clientHeight || canvas.height));
-  const pixelWidth = Math.round(width * dpr);
-  const pixelHeight = Math.round(height * dpr);
-  if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
-    canvas.width = pixelWidth;
-    canvas.height = pixelHeight;
-  }
+  canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+  canvas.height = Math.max(1, Math.floor(rect.height * dpr));
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  return {width, height};
+
+  const width = rect.width;
+  const height = rect.height;
+  const margin = { top: 34, right: 28, bottom: 54, left: 74 };
+  const plotWidth = Math.max(1, width - margin.left - margin.right);
+  const plotHeight = Math.max(1, height - margin.top - margin.bottom);
+
+  const histories = players.map(player => ({
+    player,
+    points: cleanRatingHistory(player.ratingHistory),
+  })).filter(entry => entry.points.length);
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = '#101314';
+  ctx.fillRect(0, 0, width, height);
+
+  if (!histories.length) {
+    ctx.fillStyle = '#f3f6f1';
+    ctx.font = '14px system-ui, sans-serif';
+    ctx.fillText('No rating history yet.', margin.left, margin.top + 28);
+    return;
+  }
+
+  const allRatings = histories.flatMap(entry => entry.points.map(point => point.rating));
+  const { minRating, maxRating } = chartRatingDomain(allRatings);
+  const maxBattle = Math.max(1, ...histories.flatMap(entry => entry.points.map(point => point.plotBattle)));
+  const xTicks = buildBattleTicks(maxBattle);
+  const yTicks = buildRatingTicks(minRating, maxRating);
+
+  const xFor = point => margin.left + (point.plotBattle / maxBattle) * plotWidth;
+  const yFor = rating => margin.top + (1 - (rating - minRating) / (maxRating - minRating)) * plotHeight;
+
+  drawGrid(ctx, { margin, plotWidth, plotHeight, width, height, xTicks, yTicks, xForValue: value => margin.left + (value / maxBattle) * plotWidth, yFor });
+
+  histories.forEach((entry, index) => {
+    const color = colorForPlayer(entry.player, index);
+    const points = entry.points;
+
+    ctx.lineWidth = 2.6;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = color;
+
+    for (let i = 1; i < points.length; i += 1) {
+      const previous = points[i - 1];
+      const current = points[i];
+      ctx.setLineDash(current.source === 'estimated-final' ? [7, 6] : []);
+      ctx.beginPath();
+      ctx.moveTo(xFor(previous), yFor(previous.rating));
+      ctx.lineTo(xFor(current), yFor(current.rating));
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    points.forEach((point, pointIndex) => {
+      const isLast = pointIndex === points.length - 1;
+      const radius = isLast ? 5 : 2.6;
+      ctx.beginPath();
+      ctx.arc(xFor(point), yFor(point.rating), radius, 0, Math.PI * 2);
+      ctx.fillStyle = point.source === 'estimated-final' ? '#101314' : color;
+      ctx.fill();
+      ctx.lineWidth = point.source === 'estimated-final' ? 2.4 : 1.2;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+    });
+  });
 }
 
-function drawGrid(ctx, width, height, padding, minRating, maxRating, maxBattle) {
-  const plotLeft = padding.left;
-  const plotRight = width - padding.right;
-  const plotTop = padding.top;
-  const plotBottom = height - padding.bottom;
+function drawGrid(ctx, details) {
+  const { margin, plotWidth, plotHeight, width, height, xTicks, yTicks, xForValue, yFor } = details;
 
-  ctx.strokeStyle = '#ccd5d8';
-  ctx.fillStyle = '#4f5c61';
+  ctx.save();
+  ctx.strokeStyle = 'rgba(243, 246, 241, 0.13)';
   ctx.lineWidth = 1;
-  ctx.font = '13px ui-sans-serif, system-ui';
-  ctx.textAlign = 'right';
+  ctx.font = '12px system-ui, sans-serif';
+  ctx.fillStyle = 'rgba(243, 246, 241, 0.72)';
   ctx.textBaseline = 'middle';
-  for (let i = 0; i <= 4; i++) {
-    const y = scale(i, 0, 4, plotBottom, plotTop);
-    const rating = Math.round(scale(i, 0, 4, minRating, maxRating));
-    ctx.beginPath();
-    ctx.moveTo(plotLeft, y);
-    ctx.lineTo(plotRight, y);
-    ctx.stroke();
-    ctx.fillText(String(rating), plotLeft - 14, y);
-  }
 
-  ctx.strokeStyle = '#16191b';
-  ctx.lineWidth = 1.25;
+  yTicks.forEach(tick => {
+    const y = yFor(tick);
+    ctx.beginPath();
+    ctx.moveTo(margin.left, y);
+    ctx.lineTo(width - margin.right, y);
+    ctx.stroke();
+    ctx.textAlign = 'right';
+    ctx.fillText(String(tick), margin.left - 14, y);
+  });
+
+  ctx.strokeStyle = 'rgba(243, 246, 241, 0.26)';
   ctx.beginPath();
-  ctx.moveTo(plotLeft, plotTop);
-  ctx.lineTo(plotLeft, plotBottom);
-  ctx.lineTo(plotRight, plotBottom);
+  ctx.moveTo(margin.left, margin.top);
+  ctx.lineTo(margin.left, height - margin.bottom);
+  ctx.lineTo(width - margin.right, height - margin.bottom);
   ctx.stroke();
 
-  ctx.fillStyle = '#4f5c61';
+  ctx.strokeStyle = 'rgba(243, 246, 241, 0.1)';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  battleAxisTicks(maxBattle).forEach(tick => {
-    const x = scale(tick, 0, maxBattle, plotLeft, plotRight);
+  xTicks.forEach(tick => {
+    const x = xForValue(tick);
     ctx.beginPath();
-    ctx.moveTo(x, plotBottom);
-    ctx.lineTo(x, plotBottom + 5);
+    ctx.moveTo(x, margin.top);
+    ctx.lineTo(x, margin.top + plotHeight);
     ctx.stroke();
-    ctx.fillText(String(tick), x, plotBottom + 9);
+    ctx.fillText(String(tick), x, height - margin.bottom + 18);
   });
-  ctx.fillText('Battle', (plotLeft + plotRight) / 2, height - 19);
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'bottom';
+  ctx.fillStyle = 'rgba(243, 246, 241, 0.78)';
+  ctx.fillText('Battle', margin.left, height - 14);
+
+  ctx.restore();
 }
 
-function battleAxisTicks(maxBattle) {
-  const ticks = new Set([0, maxBattle]);
-  for (let i = 1; i < 4; i++) {
-    ticks.add(Math.round((maxBattle * i) / 4));
+function cleanRatingHistory(history = []) {
+  return history
+    .map(point => {
+      const battle = Number(point.battle ?? 0);
+      const rating = Number(point.rating);
+      const offset = point.source === 'estimated-final' ? 0.65 : 0;
+      return {
+        battle,
+        plotBattle: battle + offset,
+        rating,
+        source: point.source,
+      };
+    })
+    .filter(point => Number.isFinite(point.battle) && Number.isFinite(point.rating))
+    .sort((a, b) => a.plotBattle - b.plotBattle);
+}
+
+function chartRatingDomain(ratings) {
+  const minRaw = Math.min(...ratings, 1000);
+  const maxRaw = Math.max(...ratings, 1000);
+  const padding = Math.max(16, Math.ceil((maxRaw - minRaw) * 0.16));
+  const minRating = Math.max(1000, Math.floor((minRaw - padding) / 10) * 10);
+  const maxRating = Math.ceil((maxRaw + padding) / 10) * 10;
+  if (minRating === maxRating) {
+    return { minRating: minRating - 20, maxRating: maxRating + 20 };
   }
-  return [...ticks]
-    .filter(tick => Number.isFinite(tick) && tick >= 0)
-    .sort((a, b) => a - b);
+  return { minRating, maxRating };
 }
 
-function cleanRatingHistory(player) {
-  const history = (player.ratingHistory ?? [])
-    .map(point => ({
-      ...point,
-      battle: Number(point.battle ?? 0),
-      rating: Number(point.rating),
-    }))
-    .filter(point =>
-      Number.isFinite(point.battle) &&
-      Number.isFinite(point.rating) &&
-      point.rating >= chartRatingFloor
-    );
-  if (history.length) return history;
-  const rating = Number(player.rating);
-  if (!Number.isFinite(rating) || rating < chartRatingFloor) return [];
-  return [{battle: 0, rating: Math.round(rating), at: player.lastBattleAt ?? null}];
+function buildRatingTicks(minRating, maxRating) {
+  const range = maxRating - minRating;
+  const step = range > 160 ? 50 : range > 80 ? 25 : 10;
+  const ticks = [];
+  const start = Math.ceil(minRating / step) * step;
+  for (let value = start; value <= maxRating; value += step) {
+    ticks.push(value);
+  }
+  return ticks.length ? ticks : [minRating, maxRating];
 }
 
-function chartRatingDomain(points) {
-  const ratings = points.map(point => point.rating);
-  const minObserved = Math.min(...ratings);
-  const maxObserved = Math.max(...ratings);
-  const minRating = Math.max(chartRatingFloor, Math.floor((minObserved - 20) / 25) * 25);
-  let maxRating = Math.ceil((maxObserved + 20) / 25) * 25;
-  if (maxRating <= minRating) maxRating = minRating + 50;
-  return {minRating, maxRating};
+function buildBattleTicks(maxBattle) {
+  const step = maxBattle > 80 ? 20 : maxBattle > 40 ? 10 : maxBattle > 16 ? 5 : 2;
+  const ticks = [0];
+  for (let value = step; value <= maxBattle; value += step) {
+    ticks.push(value);
+  }
+  const roundedMax = Math.ceil(maxBattle);
+  if (!ticks.includes(roundedMax)) ticks.push(roundedMax);
+  return ticks;
 }
 
-function sortPlayers(a, b) {
-  const key = state.sortBy;
-  if (key === 'actionFailureRate') return a[key] - b[key] || b.rating - a.rating;
-  return b[key] - a[key] || b.rating - a.rating;
+function colorForPlayer(player, index) {
+  return playerColors[player.id] ?? fallbackColors[index % fallbackColors.length];
 }
 
-function colorFor(index) {
-  return colorSet[index % colorSet.length];
+function displayName(player) {
+  const id = String(player.id ?? '');
+  if (id.startsWith('gpt-')) return id.replace('gpt-', '');
+  if (id === 'o3') return 'o3';
+  return String(player.model ?? player.name ?? (id || 'model'))
+    .replace(/^OpenAI\s+GPT-/i, '')
+    .replace(/^OpenAI\s+/i, '')
+    .replace(/^GPT-/i, '');
 }
 
-function percent(value) {
-  return `${Math.round((value ?? 0) * 100)}%`;
+function modelLine(player) {
+  const effort = player.reasoningEffort ? `${player.reasoningEffort} reasoning` : 'reasoning recorded';
+  const games = Number(player.games ?? 0);
+  return `${effort} / ${games} games`;
 }
 
-function leaderboardDelta(delta) {
-  if (delta === null) return '<span class="delta-muted">-</span>';
-  const deltaClass = delta >= 0 ? 'delta-up' : 'delta-down';
-  return `<span class="${deltaClass}">${formatDelta(delta)}</span>`;
+function recordCell(player) {
+  return `${formatNumber(player.wins)}-${formatNumber(player.losses)}-${formatNumber(player.ties)}`;
 }
 
-function formatDelta(value) {
-  if (!value) return '0';
-  return value > 0 ? `+${value}` : String(value);
+function winRateCell(player) {
+  return `${formatPercent(player.winRate)}%`;
+}
+
+function ratingCell(value) {
+  return Number.isFinite(Number(value)) ? Math.round(Number(value)) : '0';
+}
+
+function deltaCell(delta) {
+  const direction = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat';
+  const sign = delta > 0 ? '+' : '';
+  return `<span class="delta-pill ${direction}">${sign}${Math.round(delta)}</span>`;
+}
+
+function streakText(streak) {
+  const count = Number(streak?.count ?? 0);
+  if (!count) return 'even';
+  const kind = String(streak?.kind ?? streak?.type ?? '').toLowerCase();
+  const label = kind.startsWith('win') ? 'W' : kind.startsWith('loss') ? 'L' : kind.startsWith('tie') ? 'T' : kind.slice(0, 1).toUpperCase();
+  return `${label}${count}`;
+}
+
+function totalMisses(player) {
+  return Number(player.invalidActions ?? 0) + Number(player.timeouts ?? 0) + Number(player.errors ?? 0);
+}
+
+function formatNumber(value) {
+  const number = Number(value ?? 0);
+  return Number.isFinite(number) ? number.toLocaleString() : '0';
+}
+
+function formatPercent(value) {
+  const number = Number(value ?? 0) * 100;
+  return Number.isFinite(number) ? number.toFixed(1) : '0.0';
 }
 
 function formatDate(value) {
-  if (!value) return 'never';
-  return new Intl.DateTimeFormat(undefined, {
+  if (!value) return 'Unknown';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Unknown';
+  return date.toLocaleString(undefined, {
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
-  }).format(new Date(value));
-}
-
-function streakText(streak) {
-  if (!streak?.count) return 'No streak';
-  return `${streak.kind} ${streak.count}`;
-}
-
-function scale(value, inMin, inMax, outMin, outMax) {
-  if (inMax === inMin) return outMin;
-  return outMin + ((value - inMin) / (inMax - inMin)) * (outMax - outMin);
+  });
 }
 
 function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>"']/g, character => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  }[character]));
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-function titleCase(value) {
-  return String(value ?? 'unknown')
-    .split('-')
-    .map(part => part ? `${part[0].toUpperCase()}${part.slice(1)}` : part)
-    .join(' ');
-}
-
-function stateClass(state) {
-  if (state === 'active') return 'status-ok';
-  if (state === 'degraded') return 'status-warn';
-  return 'status-waiting';
-}
+load();
