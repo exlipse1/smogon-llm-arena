@@ -1,8 +1,8 @@
-import {legalChoicesFromRequest, isLegalChoice, normalizeChoice, sanitizeRequestForPrompt} from '../core/choices.js';
-import {timerStatusForPrompt} from '../core/timer.js';
+import {legalChoicesFromRequest, isLegalChoice, normalizeChoice} from '../core/choices.js';
 import {intSeedToShowdownSeed, sample} from '../core/rng.js';
 import {loadShowdown} from './load.js';
 import {packTeam, validateTeam} from './teams.js';
+import {buildTacticalContext, decisionTimeoutForContext, fallbackChoiceForContext} from './tactical-harness.js';
 
 const DEFAULT_CHOICE_TIMEOUT_MS = 30_000;
 const DEFAULT_MAX_TURNS = 500;
@@ -114,19 +114,20 @@ async function processPlayerStream({sideId, player, opponent, stream, state, cho
       }
 
       const legalChoices = legalChoicesFromRequest(request);
-      const context = {
-        formatId: state.formatId,
-        formatName: state.formatName,
-        sideId,
-        playerId: player.id,
-        opponentId: opponent.id,
-        turn: state.turns,
-        request: sanitizeRequestForPrompt(request),
+      const context = buildTacticalContext({
+        freeze: {formatId: state.formatId, formatName: state.formatName},
+        battle: {turns: state.turns, sideId, publicLog: sideLog},
+        player,
+        request,
         legalChoices,
-        timer: timerStatusForPrompt({request, publicLog: sideLog}),
-        publicLog: sideLog.slice(-40),
-      };
-      const choiceResult = await chooseWithTimeout(player.agent, context, choiceTimeoutMs);
+      });
+      context.opponentId = opponent.id;
+      const choiceResult = await chooseWithTimeout(
+        player.agent,
+        context,
+        decisionTimeoutForContext(context, choiceTimeoutMs),
+        () => fallbackChoiceForContext(context),
+      );
       if (choiceResult.timeout) state.sideStats[sideId].timeouts++;
       if (choiceResult.error) state.sideStats[sideId].errors++;
       const finalChoice = coerceChoice({choice: choiceResult.choice, request, legalChoices, state, sideId});
@@ -160,12 +161,16 @@ function handlePublicLine(line, state) {
   }
 }
 
-async function chooseWithTimeout(agent, context, timeoutMs) {
+async function chooseWithTimeout(agent, context, timeoutMs, fallbackChoice = () => 'default') {
   let timeout;
+  const controller = new AbortController();
   const timeoutPromise = new Promise(resolve => {
-    timeout = setTimeout(() => resolve({choice: 'default', timeout: true}), timeoutMs);
+    timeout = setTimeout(() => {
+      controller.abort();
+      resolve({choice: fallbackChoice(), timeout: true});
+    }, timeoutMs);
   });
-  const choicePromise = Promise.resolve(agent.chooseAction(context))
+  const choicePromise = Promise.resolve(agent.chooseAction({...context, signal: controller.signal}))
     .then(choice => ({choice, timeout: false}))
     .catch(error => ({choice: 'default', timeout: false, error: String(error?.message ?? error)}));
   const result = await Promise.race([choicePromise, timeoutPromise]);

@@ -1,8 +1,8 @@
-import {legalChoicesFromRequest, isLegalChoice, normalizeChoice, sanitizeRequestForPrompt} from '../core/choices.js';
+import {legalChoicesFromRequest, isLegalChoice, normalizeChoice} from '../core/choices.js';
 import {readTextMaybeRoot} from '../core/fs.js';
-import {timerStatusForPrompt} from '../core/timer.js';
 import {createAgent} from '../agents/factory.js';
 import {packTeam, validateTeam} from './teams.js';
+import {buildTacticalContext, decisionTimeoutForContext, fallbackChoiceForContext} from './tactical-harness.js';
 
 const DEFAULT_SERVER_URL = 'wss://sim3.psim.us/showdown/websocket';
 const DEFAULT_LOGIN_URL = 'https://play.pokemonshowdown.com/api/login';
@@ -195,20 +195,14 @@ export async function runLiveLadderBot(options) {
 
       battle.sideId = request.side?.id ?? battle.sideId;
       const legalChoices = legalChoicesFromRequest(request);
-      const context = {
-        formatId: freeze.formatId,
-        formatName: freeze.formatName,
-        sideId: battle.sideId,
-        playerId: player.id,
-        opponentId: 'ladder-opponent',
-        turn: battle.turns,
-        request: sanitizeRequestForPrompt(request),
-        legalChoices,
-        timer: timerStatusForPrompt({request, publicLog: battle.publicLog}),
-        publicLog: battle.publicLog.slice(-40),
-      };
+      const context = buildTacticalContext({freeze, battle, player, request, legalChoices});
       await emitBattleStatus('choosing', battle, `choosing on turn ${battle.turns}`);
-      const choiceResult = await chooseWithTimeout(agent, context, choiceTimeoutMs);
+      const choiceResult = await chooseWithTimeout(
+        agent,
+        context,
+        decisionTimeoutForContext(context, choiceTimeoutMs),
+        () => fallbackChoiceForContext(context),
+      );
       if (choiceResult.error) {
         battle.stats.errors++;
         await stopAfterAgentError(roomId, battle, choiceResult.error);
@@ -772,12 +766,16 @@ function parseRoomBlock(block) {
   return {roomId, lines: lines.filter(Boolean)};
 }
 
-async function chooseWithTimeout(agent, context, timeoutMs) {
+async function chooseWithTimeout(agent, context, timeoutMs, fallbackChoice = () => 'default') {
   let timeout;
+  const controller = new AbortController();
   const timeoutPromise = new Promise(resolve => {
-    timeout = setTimeout(() => resolve({choice: 'default', timeout: true}), timeoutMs);
+    timeout = setTimeout(() => {
+      controller.abort();
+      resolve({choice: fallbackChoice(), timeout: true});
+    }, timeoutMs);
   });
-  const choicePromise = Promise.resolve(agent.chooseAction(context))
+  const choicePromise = Promise.resolve(agent.chooseAction({...context, signal: controller.signal}))
     .then(choice => ({choice, timeout: false}))
     .catch(error => ({choice: null, timeout: false, error}));
   const result = await Promise.race([choicePromise, timeoutPromise]);

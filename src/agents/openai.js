@@ -36,8 +36,9 @@ export class OpenAiPokemonAgent {
   async chooseAction(context) {
     const response = await this.callModel({
       system: [
-        'You are playing a competitive Pokemon Showdown battle.',
-        'Return exactly one legal choice string from the provided legalChoices list.',
+        'Pick the best legal Pokemon Showdown choice to maximize win chance.',
+        'Return exactly one value from legalChoices.',
+        'Never time out. If uncertain, choose a reasonable safe legal action quickly.',
         'Do not explain. Do not invent moves. Do not include markdown.',
         TIMER_GUIDANCE,
         SPECIAL_MECHANIC_GUIDANCE,
@@ -47,12 +48,13 @@ export class OpenAiPokemonAgent {
         side: context.sideId,
         turn: context.turn,
         legalChoices: context.legalChoices,
-        timerPolicy: LADDER_TIMER_POLICY,
+        timerPolicy: context.timerPolicy ?? LADDER_TIMER_POLICY,
         timerStatus: context.timer ?? null,
-        request: context.request,
+        battleState: context.battleState ?? null,
+        annotatedChoices: context.annotatedChoices ?? null,
         recentPublicLog: context.publicLog,
       }, null, 2),
-    });
+    }, {signal: context.signal});
     return extractChoice(response, context.legalChoices);
   }
 
@@ -101,7 +103,7 @@ export class OpenAiPokemonAgent {
     throw new Error(`Model did not produce a valid team after ${attempts} attempts.\n${feedback}`);
   }
 
-  async callModel({system, user}) {
+  async callModel({system, user}, {signal = null} = {}) {
     if (!this.apiKey) {
       throw new Error('OPENAI_API_KEY is required for the OpenAI agent.');
     }
@@ -119,6 +121,7 @@ export class OpenAiPokemonAgent {
       method: 'POST',
       headers: this.headers(),
       body: JSON.stringify(body),
+      signal,
     });
 
     const data = await response.json().catch(() => ({}));
