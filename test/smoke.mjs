@@ -12,6 +12,8 @@ import {auditBenchmarkReadiness} from '../src/readiness.js';
 import {fromRoot} from '../src/core/paths.js';
 import {isLegalChoice, legalChoicesFromRequest, sanitizeRequestForPrompt} from '../src/core/choices.js';
 
+const TEST_SITE_PATH = 'results/test-site/leaderboard.json';
+
 const freezeCheck = await checkFreeze();
 assert.equal(freezeCheck.ok, true, freezeCheck.problems.join('\n'));
 
@@ -104,6 +106,18 @@ for (const file of ['data/teams/o3.txt', 'data/teams/gpt-5.2.txt', 'data/teams/g
   assert.equal(validation.pokemonCount, 6);
 }
 
+for (const file of [
+  'data/teams/sample-pool/meganium-balance.txt',
+  'data/teams/sample-pool/glimmora-balance.txt',
+  'data/teams/sample-pool/delphox-balance.txt',
+  'data/teams/sample-pool/excadrill-offense.txt',
+]) {
+  const team = await readTextMaybeRoot(file);
+  const validation = validateTeam(freeze.formatName, team);
+  assert.equal(validation.valid, true, `${file}: ${validation.problems.join('\n')}`);
+  assert.equal(validation.pokemonCount, 6);
+}
+
 const summary = await runTournament({manifestPath: 'config/benchmark.smoke.json'});
 assert.equal(summary.games.length, 2);
 for (const game of summary.games) {
@@ -115,12 +129,27 @@ const ladder = await runLadder({
   manifestPath: 'config/ladder.smoke.json',
   statePath: 'results/test-ladder/state.json',
   matchesPath: 'results/test-ladder/matches.jsonl',
-  siteOut: 'site/leaderboard.json',
+  siteOut: TEST_SITE_PATH,
   games: 2,
 });
 assert.equal(ladder.gamesCompleted, 2);
 assert.equal(ladder.snapshot.players.length, 2);
 assert.equal(ladder.snapshot.totalGames >= 2, true);
+
+const modelLeague = await runLadder({
+  manifestPath: 'config/model-league.smoke.json',
+  statePath: 'results/test-model-league/state.json',
+  matchesPath: 'results/test-model-league/matches.jsonl',
+  siteOut: TEST_SITE_PATH,
+  games: 2,
+});
+assert.equal(modelLeague.gamesCompleted, 2);
+assert.equal(modelLeague.snapshot.mode, 'model-vs-model-random-league');
+assert.equal(modelLeague.snapshot.matchmaking, 'random');
+assert.equal(modelLeague.snapshot.teamSelection, 'random');
+assert.equal(modelLeague.snapshot.teamPool.length, 2);
+assert.equal(modelLeague.snapshot.players.length, 3);
+assert.ok(modelLeague.snapshot.recentMatches.every(match => match.p1.team?.id && match.p2.team?.id));
 
 await fs.rm(fromRoot('results/test-live'), {recursive: true, force: true});
 await writeText('results/test-live/o3.jsonl', `${JSON.stringify({
@@ -193,7 +222,8 @@ await writeText('results/test-live/status/o3.json', `${JSON.stringify({
 const liveSnapshot = await publishLiveLeaderboard({
   manifestPath: 'config/ladder.openai.example.json',
   matchesDir: 'results/test-live',
-  siteOut: 'site/leaderboard.json',
+  siteOut: TEST_SITE_PATH,
+  archiveDir: 'results/test-site/seasons',
 });
 assert.equal(liveSnapshot.ratingSystem.liveInitialRating, 1000);
 assert.equal(liveSnapshot.ratingSystem.liveRatingFloor, 1000);
@@ -206,7 +236,7 @@ assert.equal(o3.account.username, 'PS_O3');
 assert.equal(o3.ratingHistory.at(-1).source, 'estimated-final');
 assert.equal(o3.ratingHistory.at(-1).delta, 15);
 assert.equal(o3.liveStatus.battleRoomId, 'battle-gen9championsou-999-privatewatchid');
-const publicLiveSnapshot = JSON.parse(await fs.readFile(fromRoot('site/leaderboard.json'), 'utf8'));
+const publicLiveSnapshot = JSON.parse(await fs.readFile(fromRoot(TEST_SITE_PATH), 'utf8'));
 const publicO3 = publicLiveSnapshot.players.find(player => player.id === 'o3');
 assert.equal(publicO3.liveStatus.battleRoomId, 'battle-gen9championsou-999-privatewatchid');
 assert.equal(publicO3.liveStatus.opponent.username, 'ladder-user-2');
@@ -227,7 +257,8 @@ try {
   const polledSnapshot = await publishLiveLeaderboard({
     manifestPath: 'config/ladder.openai.example.json',
     matchesDir: 'results/test-live',
-    siteOut: 'site/leaderboard.json',
+    siteOut: TEST_SITE_PATH,
+    archiveDir: 'results/test-site/seasons',
     pollRatings: true,
     usersBaseUrl: ratingServer.usersBaseUrl,
   });
@@ -245,7 +276,7 @@ try {
   const readiness = await auditBenchmarkReadiness({
     manifestPath: 'config/ladder.openai.example.json',
     matchesDir: 'results/test-live',
-    sitePath: 'site/leaderboard.json',
+    sitePath: TEST_SITE_PATH,
     pollRatings: true,
     usersBaseUrl: ratingServer.usersBaseUrl,
   });

@@ -1,0 +1,39 @@
+{
+  "name": "champions-ou-model-league-smoke",
+  "mode": "model-vs-model-random-league",
+  "track": "head-to-head-smoke",
+  "teamPolicy": "random-fixed-sample-team",
+  "matchmaking": "random",
+  "teamSelection": "random",
+  "format": "[Gen 9 Champions] OU",
+  "seed": 20260617,
+  "teamPool": [
+    {
+      "id": "meganium-balance",
+      "name": "Meganium Balance",
+      "file": "data/teams/sample-pool/meganium-balance.txt"
+    },
+    {
+      "id": "glimmora-balance",
+      "name": "Glimmora Balance",
+      "file": "data/teams/sample-pool/glimmora-balance.txt"
+    }
+  ],
+  "players": [
+    {
+      "id": "heuristic-a",
+      "name": "Heuristic A",
+      "type": "heuristic"
+    },
+    {
+      "id": "heuristic-b",
+      "name": "Heuristic B",
+      "type": "heuristic"
+    },
+    {
+      "id": "random-c",
+      "name": "Random C",
+      "type": "random"
+    }
+  ]
+}

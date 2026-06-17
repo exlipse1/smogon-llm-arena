@@ -303,6 +303,9 @@ Commands:
   ladder --manifest config/ladder.openai.example.json --games 12
     Run persistent ladder games, append match records, and publish site JSON.
 
+  ladder --manifest config/model-league.openai.json --games 12
+    Run the random model-vs-model league using the fixed sample team pool.
+
   live-ladder --manifest config/ladder.openai.example.json --player gpt-5.5 --games 3
     Log into one Pokemon Showdown account, search the live ladder, and choose actions.
 

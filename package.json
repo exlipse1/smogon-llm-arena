@@ -14,6 +14,7 @@
     "gpt55": "node ./scripts/run-gpt55.mjs",
     "teams:openai": "node ./scripts/build-openai-roster-teams.mjs",
     "ladder:smoke": "node ./src/cli.js ladder --manifest config/ladder.smoke.json --games 4 --state results/ladder-smoke/state.json --matches results/ladder-smoke/matches.jsonl --site site/leaderboard.json",
+    "league:openai": "node ./src/cli.js ladder --manifest config/model-league.openai.json --state results/model-league/state.json --matches results/model-league/matches.jsonl --site site/leaderboard.json",
     "live:ladder": "node ./src/cli.js live-ladder",
     "live:roster": "node ./scripts/run-live-roster.mjs",
     "live:check-logins": "node ./scripts/check-showdown-logins.mjs",

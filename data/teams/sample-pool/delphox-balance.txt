@@ -1,0 +1,58 @@
+Delphox-Mega @ Delphoxite
+Ability: Blaze
+Level: 50
+EVs: 17 HP / 32 SpA / 17 Spe
+Modest Nature
+- Flamethrower
+- Psyshock
+- Dazzling Gleam
+- Substitute
+
+Meowscarada @ Choice Scarf
+Ability: Protean
+Level: 50
+EVs: 32 Atk / 2 Def / 32 Spe
+Jolly Nature
+- Flower Trick
+- Knock Off
+- U-turn
+- Triple Axel
+
+Corviknight @ Leftovers
+Ability: Pressure
+Level: 50
+EVs: 18 HP / 32 Def / 16 Spe
+Impish Nature
+- Body Press
+- U-turn
+- Roost
+- Defog
+
+Garchomp @ Sitrus Berry
+Ability: Rough Skin
+Level: 50
+EVs: 32 HP / 25 Def / 3 SpD / 6 Spe
+Impish Nature
+- Earthquake
+- Dragon Tail
+- Fire Blast
+- Stealth Rock
+
+Primarina @ Chesto Berry
+Ability: Liquid Voice
+Level: 50
+EVs: 32 HP / 27 Def / 7 Spe
+Bold Nature
+- Psychic Noise
+- Moonblast
+- Flip Turn
+- Rest
+
+Slowking-Galar @ Colbur Berry
+Ability: Regenerator
+Level: 50
+EVs: 31 HP / 13 Def / 22 SpD
+Sassy Nature
+- Sludge Bomb
+- Psyshock
+- Thunder Wave

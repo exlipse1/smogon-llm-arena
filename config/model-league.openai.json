@@ -1,0 +1,74 @@
+{
+  "name": "champions-ou-openai-model-league",
+  "mode": "model-vs-model-random-league",
+  "track": "head-to-head",
+  "teamPolicy": "random-fixed-sample-team",
+  "matchmaking": "random",
+  "teamSelection": "random",
+  "season": {
+    "id": "model-league-2026-06-17",
+    "name": "Model League",
+    "startedAt": "2026-06-17T00:00:00.000Z",
+    "description": "OpenAI models play head-to-head on randomly assigned fixed sample teams.",
+    "resetPolicy": "Archive site/seasons/model-league-2026-06-17 before starting the next season.",
+    "archiveDir": "site/seasons"
+  },
+  "format": "[Gen 9 Champions] OU",
+  "seed": 20260617,
+  "teamPool": [
+    {
+      "id": "meganium-balance",
+      "name": "Meganium Balance",
+      "file": "data/teams/sample-pool/meganium-balance.txt"
+    },
+    {
+      "id": "glimmora-balance",
+      "name": "Glimmora Balance",
+      "file": "data/teams/sample-pool/glimmora-balance.txt"
+    },
+    {
+      "id": "delphox-balance",
+      "name": "Delphox Balance",
+      "file": "data/teams/sample-pool/delphox-balance.txt"
+    },
+    {
+      "id": "excadrill-offense",
+      "name": "Excadrill Offense",
+      "file": "data/teams/sample-pool/excadrill-offense.txt"
+    }
+  ],
+  "players": [
+    {
+      "id": "o3",
+      "enabled": true,
+      "name": "OpenAI o3",
+      "type": "openai",
+      "model": "o3",
+      "reasoningEffort": "medium"
+    },
+    {
+      "id": "gpt-5.2",
+      "enabled": true,
+      "name": "OpenAI GPT-5.2",
+      "type": "openai",
+      "model": "gpt-5.2",
+      "reasoningEffort": "medium"
+    },
+    {
+      "id": "gpt-5.4",
+      "enabled": true,
+      "name": "OpenAI GPT-5.4",
+      "type": "openai",
+      "model": "gpt-5.4",
+      "reasoningEffort": "medium"
+    },
+    {
+      "id": "gpt-5.5",
+      "enabled": true,
+      "name": "OpenAI GPT-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "medium"
+    }
+  ]
+}

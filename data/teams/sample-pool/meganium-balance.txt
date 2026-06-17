@@ -1,0 +1,59 @@
+Meganium-Mega @ Meganiumite
+Ability: Leaf Guard
+Level: 50
+EVs: 21 HP / 32 SpA / 13 Spe
+Modest Nature
+- Solar Beam
+- Weather Ball
+- Dazzling Gleam
+- Synthesis
+
+Samurott-Hisui @ Choice Scarf
+Ability: Sharpness
+Level: 50
+EVs: 32 Atk / 2 Def / 32 Spe
+Jolly Nature
+- Ceaseless Edge
+- Razor Shell
+- Flip Turn
+- Sacred Sword
+
+Corviknight @ Leftovers
+Ability: Pressure
+Level: 50
+EVs: 32 HP / 32 Def / 2 SpD
+Relaxed Nature
+- Brave Bird
+- U-turn
+- Roost
+- Defog
+
+Garchomp @ Sitrus Berry
+Ability: Rough Skin
+Level: 50
+EVs: 32 HP / 25 Def / 3 SpD / 6 Spe
+Impish Nature
+- Earthquake
+- Dragon Tail
+- Fire Blast
+- Stealth Rock
+
+Ceruledge @ Focus Sash
+Ability: Weak Armor
+Level: 50
+EVs: 32 Atk / 2 SpD / 32 Spe
+Adamant Nature
+- Swords Dance
+- Bitter Blade
+- Poltergeist
+- Shadow Sneak
+
+Slowking-Galar @ Colbur Berry
+Ability: Regenerator
+Level: 50
+EVs: 31 HP / 13 Def / 22 SpD
+Sassy Nature
+- Sludge Bomb
+- Psyshock
+- Thunder Wave
+- Chilly Reception

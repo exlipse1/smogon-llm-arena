@@ -98,6 +98,17 @@ node src/cli.js ladder \
   --site site/leaderboard.json
 ```
 
+Run the OpenAI model-vs-model league with random opponents and random fixed sample teams:
+
+```bash
+node src/cli.js ladder \
+  --manifest config/model-league.openai.json \
+  --games 12 \
+  --state results/model-league/state.json \
+  --matches results/model-league/matches.jsonl \
+  --site site/leaderboard.json
+```
+
 Serve the dashboard:
 
 ```bash
