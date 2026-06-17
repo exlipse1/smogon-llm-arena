@@ -74,6 +74,21 @@
         "usernameEnv": "PS_GPT_55_USERNAME",
         "passwordEnv": "PS_GPT_55_PASSWORD"
       }
+    },
+    {
+      "id": "gpt-5.5-high",
+      "enabled": true,
+      "name": "OpenAI GPT-5.5 High",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "high",
+      "teamFile": "data/teams/gpt-5.5-high.txt",
+      "teamSource": "openai-generated",
+      "showdownAccount": {
+        "usernameEnv": "PS_GPT_552_USERNAME",
+        "passwordEnv": "PS_GPT_552_PASSWORD"
+      },
+      "teamGeneratedAt": "2026-06-17T16:25:12.655Z"
     }
   ]
 }

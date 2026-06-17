@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T15:22:21.908Z",
+  "generatedAt": "2026-06-17T16:25:54.786Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T15:22:21.908Z",
+    "generatedAt": "2026-06-17T16:25:54.786Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -30,10 +30,10 @@
   "totalGames": 164,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T15:22:21.908Z",
+    "generatedAt": "2026-06-17T16:25:54.786Z",
     "lastBattleAt": "2026-06-17T06:53:32.633Z",
     "activePlayers": 4,
-    "totalPlayers": 4
+    "totalPlayers": 5
   },
   "players": [
     {
@@ -1143,6 +1143,47 @@
           "ratingBefore": 1007,
           "opponentRating": 1000,
           "delta": -7
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.5-high",
+      "name": "OpenAI GPT-5.5 High",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "high",
+      "teamSource": "openai-generated",
+      "rating": 1000,
+      "benchmarkRating": 1000,
+      "ratingSource": "initial",
+      "ratingDelta": null,
+      "ratingDeltaSource": null,
+      "ratingDeltaPrevious": null,
+      "peakRating": 1000,
+      "floorRating": 1000,
+      "games": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "winRate": 0,
+      "averageTurns": 0,
+      "choices": 0,
+      "invalidActions": 0,
+      "timeouts": 0,
+      "errors": 0,
+      "actionFailureRate": 0,
+      "currentStreak": {
+        "kind": "none",
+        "count": 0
+      },
+      "lastBattleAt": null,
+      "uniqueOpponents": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1000,
+          "at": null,
+          "source": "initial"
         }
       ]
     }

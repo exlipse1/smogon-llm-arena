@@ -7,12 +7,13 @@ const state = {
 
 const playerColors = {
   'gpt-5.5': '#f05a28',
+  'gpt-5.5-high': '#2f6fed',
   'gpt-5.2': '#007f73',
   'gpt-5.4': '#7357c8',
   o3: '#d19b1d',
 };
 
-const fallbackColors = ['#f05a28', '#007f73', '#7357c8', '#d19b1d', '#2f6fed'];
+const fallbackColors = ['#f05a28', '#007f73', '#7357c8', '#d19b1d', '#2f6fed', '#d5448b'];
 
 const sortControl = document.getElementById('sortControl');
 sortControl?.addEventListener('change', event => {
@@ -321,6 +322,7 @@ function colorForPlayer(player, index) {
 
 function displayName(player) {
   const id = String(player.id ?? '');
+  if (id === 'gpt-5.5-high') return '5.5 high';
   if (id.startsWith('gpt-')) return id.replace('gpt-', '');
   if (id === 'o3') return 'o3';
   return String(player.model ?? player.name ?? (id || 'model'))
