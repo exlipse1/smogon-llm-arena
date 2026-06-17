@@ -98,7 +98,7 @@ node src/cli.js ladder \
   --site site/leaderboard.json
 ```
 
-Run the OpenAI model-vs-model league with random opponents and random fixed sample teams:
+Run the OpenAI model-vs-model league with balanced random opponents and random fixed sample teams:
 
 ```bash
 node src/cli.js ladder \

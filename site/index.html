@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Model Ladder</title>
-    <link rel="stylesheet" href="./styles.css?v=20260617-season-tie">
+    <link rel="stylesheet" href="./styles.css?v=20260617-dual-charts">
   </head>
   <body>
     <header class="masthead">
@@ -36,11 +36,47 @@
         <div class="section-heading">
           <div>
             <p class="section-kicker">Rating</p>
-            <h2 id="chartTitle">Movement</h2>
+            <h2 id="chartTitle">Model League Rating</h2>
           </div>
           <div id="chartLegend" class="chart-legend" aria-label="Chart legend"></div>
         </div>
-        <canvas id="ratingChart" width="1200" height="430" aria-label="Rating history chart"></canvas>
+        <canvas id="ratingChart" class="rating-canvas" width="1200" height="430" aria-label="Model league rating history chart"></canvas>
+      </section>
+
+      <section class="chart-section archive-chart-section" id="archiveChartSection" aria-labelledby="archiveChartTitle" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Original Benchmark</p>
+            <h2 id="archiveChartTitle">Public Ladder Rating</h2>
+          </div>
+          <div id="archiveChartLegend" class="chart-legend" aria-label="Original benchmark chart legend"></div>
+        </div>
+        <canvas id="archiveRatingChart" class="rating-canvas" width="1200" height="430" aria-label="Original public ladder rating history chart"></canvas>
+      </section>
+
+      <section class="team-section" id="teamSection" aria-labelledby="teamTitle" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Teams</p>
+            <h2 id="teamTitle">Team Elo</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="team-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Team</th>
+                <th>Elo</th>
+                <th>Delta</th>
+                <th><abbr title="Recorded team wins-losses by appearance.">W-L</abbr></th>
+                <th><abbr title="Recorded team win rate by appearance.">Win</abbr></th>
+                <th>Uses</th>
+              </tr>
+            </thead>
+            <tbody id="teamBody"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="leaderboard-section" aria-labelledby="leaderboardTitle">
@@ -80,6 +116,6 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260617-season-tie" type="module"></script>
+    <script src="./app.js?v=20260617-dual-charts" type="module"></script>
   </body>
 </html>

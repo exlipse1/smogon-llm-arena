@@ -10,6 +10,7 @@ const DEFAULT_SITE_OUT = 'site/leaderboard.json';
 const STATE_VERSION = 1;
 const RECENT_MATCH_LIMIT = 100;
 const HISTORY_LIMIT = 200;
+const DEFAULT_BATTLE_TIMEOUT_MS = 15 * 60 * 1000;
 
 export async function runLadder(options = {}) {
   const {
@@ -20,6 +21,8 @@ export async function runLadder(options = {}) {
     games = 1,
     continuous = false,
     intervalMs = 10_000,
+    battleTimeoutMs = DEFAULT_BATTLE_TIMEOUT_MS,
+    onBattleLogLine = null,
     onGame = null,
   } = options;
 
@@ -42,6 +45,8 @@ export async function runLadder(options = {}) {
         manifest,
         state,
         matchesPath,
+        battleTimeoutMs,
+        onBattleLogLine,
       });
       state = report.state;
       await writeJson(statePath, state);
@@ -62,7 +67,7 @@ export async function runLadder(options = {}) {
   };
 }
 
-async function runOneLadderGame({freeze, manifest, state, matchesPath}) {
+async function runOneLadderGame({freeze, manifest, state, matchesPath, battleTimeoutMs, onBattleLogLine}) {
   const activePlayers = activeManifestPlayers(manifest.players);
   const matchup = selectMatchup({manifest, state, players: activePlayers});
   const first = withSelectedTeam(matchup.first, matchup.firstTeam);
@@ -75,13 +80,18 @@ async function runOneLadderGame({freeze, manifest, state, matchesPath}) {
     [second.id]: state.players[second.id].rating,
   };
 
-  const result = await runManifestBattle({
-    freeze,
-    first,
-    second,
-    seed,
-    battleIndex,
-  });
+  const result = await withTimeout(
+    runManifestBattle({
+      freeze,
+      first,
+      second,
+      seed,
+      battleIndex,
+      onPublicLine: onBattleLogLine,
+    }),
+    battleTimeoutMs,
+    `Battle ${battleIndex + 1} timed out after ${battleTimeoutMs}ms.`
+  );
 
   const scoreFirst = resultToScore(result, first.id);
   const nextRatings = updateElo(
@@ -254,6 +264,7 @@ function updateStreak(player, outcome) {
 
 function createLeaderboardSnapshot({state, manifest, freeze}) {
   const season = seasonView(manifest, freeze);
+  const teams = createTeamLeaderboard({state, manifest, freeze});
   const players = Object.values(state.players)
     .filter(player => !player.inactive)
     .map(player => ({
@@ -315,8 +326,87 @@ function createLeaderboardSnapshot({state, manifest, freeze}) {
       lastBattleAt,
     },
     players,
+    teams,
     recentMatches: state.recentMatches,
   };
+}
+
+function createTeamLeaderboard({state, manifest, freeze}) {
+  const teamPool = normalizeTeamPool(manifest);
+  if (!teamPool.length) return [];
+
+  const initialRating = Number(freeze.ratingSystem?.initialRating ?? 1500);
+  const kFactor = Number(freeze.ratingSystem?.kFactor ?? 32);
+  const teams = Object.fromEntries(teamPool.map(team => [team.id, {
+    ...teamView(team),
+    rating: initialRating,
+    peakRating: initialRating,
+    floorRating: initialRating,
+    games: 0,
+    wins: 0,
+    losses: 0,
+    turns: 0,
+    mirrorGames: 0,
+    ratingHistory: [{battle: 0, rating: Math.round(initialRating), at: null}],
+  }]));
+
+  const matches = [...(state.recentMatches ?? [])].reverse();
+  for (const match of matches) {
+    const p1TeamId = match.p1?.team?.id;
+    const p2TeamId = match.p2?.team?.id;
+    const p1Team = teams[p1TeamId];
+    const p2Team = teams[p2TeamId];
+    if (!p1Team || !p2Team) continue;
+
+    const scoreP1 = match.tie ? 0.5 : (match.winnerId === match.p1?.id ? 1 : 0);
+    const scoreP2 = 1 - scoreP1;
+    applyTeamAppearance({team: p1Team, score: scoreP1, turns: match.turns});
+    applyTeamAppearance({team: p2Team, score: scoreP2, turns: match.turns});
+
+    if (p1Team.id === p2Team.id) {
+      p1Team.mirrorGames += 1;
+      p1Team.ratingHistory.push({
+        battle: battleNumber(match),
+        rating: Math.round(p1Team.rating),
+        at: match.finishedAt ?? null,
+        source: 'same-team-match',
+      });
+      continue;
+    }
+
+    const nextRatings = updateElo(p1Team.rating, p2Team.rating, scoreP1, kFactor);
+    p1Team.rating = nextRatings.a;
+    p2Team.rating = nextRatings.b;
+    updateTeamRatingExtrema(p1Team);
+    updateTeamRatingExtrema(p2Team);
+    p1Team.ratingHistory.push({battle: battleNumber(match), rating: Math.round(p1Team.rating), at: match.finishedAt ?? null});
+    p2Team.ratingHistory.push({battle: battleNumber(match), rating: Math.round(p2Team.rating), at: match.finishedAt ?? null});
+  }
+
+  return Object.values(teams)
+    .map(team => ({
+      ...team,
+      rating: Math.round(team.rating),
+      ratingDelta: latestRatingDelta(team.ratingHistory),
+      peakRating: Math.round(team.peakRating),
+      floorRating: Math.round(team.floorRating),
+      winRate: ratio(team.wins, team.games),
+      averageTurns: team.games ? round(team.turns / team.games, 1) : 0,
+      ratingHistory: team.ratingHistory.slice(-HISTORY_LIMIT),
+    }))
+    .sort((a, b) => b.rating - a.rating || b.winRate - a.winRate || a.name.localeCompare(b.name));
+}
+
+function applyTeamAppearance({team, score, turns}) {
+  team.games += 1;
+  team.turns += Number(turns ?? 0);
+  if (score === 1) team.wins += 1;
+  if (score === 0) team.losses += 1;
+}
+
+function updateTeamRatingExtrema(team) {
+  team.peakRating = Math.max(team.peakRating, team.rating);
+  team.floorRating = Math.min(team.floorRating, team.rating);
 }
 
 function playerMatchView(player, sideStats, ratingBefore, ratingAfter, selectedTeam = null) {
@@ -382,7 +472,24 @@ function activeManifestPlayers(players = []) {
 }
 
 function selectMatchup({manifest, state, players}) {
-  if (String(manifest.matchmaking ?? '').toLowerCase() === 'random') {
+  const matchmaking = String(manifest.matchmaking ?? '').toLowerCase();
+  if (matchmaking === 'balanced-random') {
+    const random = mulberry32(Number(manifest.seed ?? 1) + state.nextBattleIndex * 4099 + 17);
+    const first = sampleLowestGamePlayers({players, state, random});
+    const second = sampleLowestGamePlayers({
+      players: players.filter(player => player.id !== first.id),
+      state,
+      random,
+    });
+    return {
+      first,
+      second,
+      firstTeam: selectTeam({manifest, player: first, random}),
+      secondTeam: selectTeam({manifest, player: second, random}),
+    };
+  }
+
+  if (matchmaking === 'random') {
     const random = mulberry32(Number(manifest.seed ?? 1) + state.nextBattleIndex * 4099 + 17);
     const first = sample(players, random);
     const opponents = players.filter(player => player.id !== first.id);
@@ -428,11 +535,17 @@ function withSelectedTeam(player, selectedTeam) {
 }
 
 function nextPairingIndex({manifest, state, players}) {
-  if (String(manifest.matchmaking ?? '').toLowerCase() === 'random') {
+  const matchmaking = String(manifest.matchmaking ?? '').toLowerCase();
+  if (matchmaking === 'random' || matchmaking === 'balanced-random') {
     return Number(state.nextPairingIndex ?? 0) + 1;
   }
   const pairings = buildPairings(players);
   return (Number(state.nextPairingIndex ?? 0) + 1) % pairings.length;
+}
+
+function sampleLowestGamePlayers({players, state, random}) {
+  const lowestGames = Math.min(...players.map(player => Number(state.players[player.id]?.games ?? 0)));
+  return sample(players.filter(player => Number(state.players[player.id]?.games ?? 0) === lowestGames), random);
 }
 
 function normalizeTeamPool(manifest) {
@@ -486,6 +599,12 @@ function latestRatingDelta(history = []) {
   return Number.isFinite(delta) ? Math.round(delta) : 0;
 }
 
+function battleNumber(match) {
+  const fromId = String(match?.id ?? '').match(/(\d+)$/)?.[1];
+  const number = Number(fromId);
+  return Number.isFinite(number) ? number : 0;
+}
+
 function scoreToOutcome(score) {
   if (score === 1) return 'win';
   if (score === 0) return 'loss';
@@ -504,4 +623,13 @@ function round(value, digits) {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function withTimeout(promise, timeoutMs, message) {
+  if (!Number.isFinite(Number(timeoutMs)) || Number(timeoutMs) <= 0) return promise;
+  let timeout = null;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeout = setTimeout(() => reject(new Error(message)), Number(timeoutMs));
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeout));
 }

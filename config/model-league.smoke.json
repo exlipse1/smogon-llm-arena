@@ -3,7 +3,7 @@
   "mode": "model-vs-model-random-league",
   "track": "head-to-head-smoke",
   "teamPolicy": "random-fixed-sample-team",
-  "matchmaking": "random",
+  "matchmaking": "balanced-random",
   "teamSelection": "random",
   "format": "[Gen 9 Champions] OU",
   "seed": 20260617,

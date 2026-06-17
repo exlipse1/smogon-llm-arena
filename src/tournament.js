@@ -74,7 +74,7 @@ export async function runTournament({manifestPath, outPath}) {
   return summary;
 }
 
-export async function runManifestBattle({freeze, first, second, seed, battleIndex = 0}) {
+export async function runManifestBattle({freeze, first, second, seed, battleIndex = 0, onPublicLine = null}) {
   const p1Team = await readTextMaybeRoot(first.teamFile);
   const p2Team = await readTextMaybeRoot(second.teamFile);
   return runBattle({
@@ -93,5 +93,11 @@ export async function runManifestBattle({freeze, first, second, seed, battleInde
       team: p2Team,
       agent: createAgent(second, seed + battleIndex * 2 + 2),
     },
+    onPublicLine: onPublicLine ? event => onPublicLine({
+      ...event,
+      battleIndex,
+      p1: first,
+      p2: second,
+    }) : null,
   });
 }

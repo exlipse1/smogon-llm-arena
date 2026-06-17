@@ -17,6 +17,7 @@ export async function runBattle(options) {
     choiceTimeoutMs = DEFAULT_CHOICE_TIMEOUT_MS,
     maxTurns = DEFAULT_MAX_TURNS,
     log = false,
+    onPublicLine = null,
   } = options;
 
   const p1Validation = validateTeam(formatName, p1.team);
@@ -61,7 +62,7 @@ export async function runBattle(options) {
     choiceTimeoutMs,
     maxTurns,
   });
-  const spectatorTask = processSpectatorStream(streams.spectator, state);
+  const spectatorTask = processSpectatorStream(streams.spectator, state, onPublicLine);
 
   await streams.omniscient.write(`>start ${JSON.stringify({formatid: formatId, seed: intSeedToShowdownSeed(seed)})}`);
   await streams.omniscient.write(`>player p1 ${JSON.stringify({name: p1.name ?? p1.id, team: packTeam(p1.team)})}`);
@@ -139,12 +140,13 @@ async function processPlayerStream({sideId, player, opponent, stream, state, cho
   }
 }
 
-async function processSpectatorStream(stream, state) {
+async function processSpectatorStream(stream, state, onPublicLine = null) {
   for await (const chunk of stream) {
     for (const line of chunk.split('\n')) {
       if (!line) continue;
       state.log.push(line);
       handlePublicLine(line, state);
+      if (onPublicLine) onPublicLine({line, turn: state.turns});
     }
   }
 }

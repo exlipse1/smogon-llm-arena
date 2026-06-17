@@ -3,7 +3,7 @@
   "mode": "model-vs-model-random-league",
   "track": "head-to-head",
   "teamPolicy": "random-fixed-sample-team",
-  "matchmaking": "random",
+  "matchmaking": "balanced-random",
   "teamSelection": "random",
   "season": {
     "id": "model-league-2026-06-17",

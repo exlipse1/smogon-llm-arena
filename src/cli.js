@@ -129,6 +129,11 @@ async function ladder(rawArgs) {
     games: Number(args.games ?? 1),
     continuous: Boolean(args.continuous),
     intervalMs: Number(args.intervalMs ?? args['interval-ms'] ?? 10_000),
+    battleTimeoutMs: Number(args.battleTimeoutMs ?? args['battle-timeout-ms'] ?? 15 * 60 * 1000),
+    onBattleLogLine: booleanArg(args, 'printMoves', 'print-moves', false) ? event => {
+      const line = formatMoveLogLine(event);
+      if (line) console.log(line);
+    } : null,
     onGame: match => {
       console.log(JSON.stringify({
         match: match.id,
@@ -284,6 +289,34 @@ function booleanArg(parsed, camelName, kebabName, defaultValue) {
   return Boolean(value);
 }
 
+function formatMoveLogLine(event) {
+  const line = String(event.line ?? '');
+  const battleId = `battle-${String(Number(event.battleIndex ?? 0) + 1).padStart(6, '0')}`;
+  const parts = line.split('|');
+  const sideName = ident => {
+    const side = String(ident ?? '').slice(0, 2);
+    if (side === 'p1') return event.p1?.id ?? 'p1';
+    if (side === 'p2') return event.p2?.id ?? 'p2';
+    return side || 'field';
+  };
+  const pokemonName = ident => String(ident ?? '').replace(/^p[12][a-z]?:\s*/i, '');
+
+  if (line.startsWith('|turn|')) return `[${battleId}] turn ${parts[2]}`;
+  if (line.startsWith('|move|')) {
+    return `[${battleId}] turn ${event.turn}: ${sideName(parts[2])} ${pokemonName(parts[2])} used ${parts[3]} -> ${pokemonName(parts[4])}`;
+  }
+  if (line.startsWith('|switch|')) {
+    return `[${battleId}] turn ${event.turn}: ${sideName(parts[2])} switched to ${pokemonName(parts[2])}`;
+  }
+  if (line.startsWith('|drag|')) {
+    return `[${battleId}] turn ${event.turn}: ${sideName(parts[2])} was dragged to ${pokemonName(parts[2])}`;
+  }
+  if (line.startsWith('|faint|')) return `[${battleId}] turn ${event.turn}: ${sideName(parts[2])} ${pokemonName(parts[2])} fainted`;
+  if (line.startsWith('|win|')) return `[${battleId}] winner: ${parts[2]}`;
+  if (line === '|tie') return `[${battleId}] tie`;
+  return null;
+}
+
 function printHelp() {
   console.log(`Smogon LLM Arena
 
@@ -304,7 +337,8 @@ Commands:
     Run persistent ladder games, append match records, and publish site JSON.
 
   ladder --manifest config/model-league.openai.json --games 12
-    Run the random model-vs-model league using the fixed sample team pool.
+    Run the balanced random model-vs-model league using the fixed sample team pool.
+    Add --print-moves to stream moves, switches, faints, and winners.
 
   live-ladder --manifest config/ladder.openai.example.json --player gpt-5.5 --games 3
     Log into one Pokemon Showdown account, search the live ladder, and choose actions.

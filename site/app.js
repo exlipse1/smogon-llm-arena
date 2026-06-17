@@ -1,10 +1,12 @@
 const DATA_URL = './leaderboard.json';
+const ARCHIVE_DATA_URL = './seasons/champion-2026-06-16/leaderboard.json';
 const REFRESH_MS = 30_000;
 const LIVE_STATUS_MAX_AGE_MS = 3 * 60 * 1000;
 const SHOWDOWN_BATTLE_BASE_URL = 'https://play.pokemonshowdown.com/';
 
 const state = {
   data: null,
+  archiveData: null,
   sortKey: 'rating',
 };
 
@@ -29,13 +31,18 @@ window.addEventListener('resize', () => {
   if (!state.data || chartResizeFrame !== null) return;
   chartResizeFrame = window.requestAnimationFrame(() => {
     chartResizeFrame = null;
-    drawChart(sortPlayers(state.data.players ?? []));
+    drawAllCharts();
   });
 });
 
 async function load() {
   try {
-    state.data = await fetchJson(DATA_URL).catch(() => fetchJson('./leaderboard.sample.json'));
+    const [data, archiveData] = await Promise.all([
+      fetchJson(DATA_URL).catch(() => fetchJson('./leaderboard.sample.json')),
+      fetchJson(ARCHIVE_DATA_URL).catch(() => null),
+    ]);
+    state.data = data;
+    state.archiveData = archiveData;
     render();
   } catch (error) {
     document.querySelector('.scoreline').innerHTML = `<p class="empty-state">Could not load leaderboard data: ${escapeHtml(error.message)}</p>`;
@@ -66,9 +73,11 @@ function render() {
 
   renderScoreline(players);
   renderLiveMatches(players);
+  renderTeamLeaderboard(data.teams ?? []);
   renderLeaderboard(players);
-  renderChartLegend(players);
-  drawChart(players);
+  renderChartLegend(players, document.getElementById('chartLegend'));
+  renderArchiveChart();
+  drawAllCharts();
 }
 
 function sortPlayers(players) {
@@ -138,6 +147,42 @@ function renderLeaderboard(players) {
   }).join('');
 }
 
+function renderTeamLeaderboard(teams) {
+  const section = document.getElementById('teamSection');
+  const tbody = document.getElementById('teamBody');
+  if (!section || !tbody) return;
+
+  section.hidden = teams.length === 0;
+  if (!teams.length) {
+    tbody.innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = teams.map((team, index) => {
+    const delta = Number(team.ratingDelta ?? 0);
+    const accent = colorForPlayer(team, index);
+    return `
+      <tr>
+        <td class="rank-cell">${String(index + 1).padStart(2, '0')}</td>
+        <td>
+          <div class="model-cell">
+            <span class="rank-mark" style="background:${accent}"></span>
+            <span>
+              <strong>${escapeHtml(team.name ?? team.id ?? 'Team')}</strong>
+              <span class="subtext">${escapeHtml(teamLine(team))}</span>
+            </span>
+          </div>
+        </td>
+        <td><span class="rating">${ratingCell(team.rating)}</span></td>
+        <td>${deltaCell(delta)}</td>
+        <td>${recordCell(team)}</td>
+        <td>${winRateCell(team)}</td>
+        <td>${formatNumber(team.games)}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
 function renderLiveMatches(players) {
   const section = document.querySelector('.live-section');
   const list = document.getElementById('liveMatches');
@@ -162,8 +207,8 @@ function renderLiveMatches(players) {
   `).join('');
 }
 
-function renderChartLegend(players) {
-  const legend = document.getElementById('chartLegend');
+function renderChartLegend(players, legend) {
+  if (!legend) return;
   legend.innerHTML = players.map((player, index) => `
     <span>
       <i style="background:${colorForPlayer(player, index)}"></i>
@@ -172,11 +217,28 @@ function renderChartLegend(players) {
   `).join('');
 }
 
-function drawChart(players) {
-  const canvas = document.getElementById('ratingChart');
+function renderArchiveChart() {
+  const section = document.getElementById('archiveChartSection');
+  if (!section) return;
+  const players = sortPlayers(state.archiveData?.players ?? []);
+  section.hidden = players.length === 0;
+  renderChartLegend(players, document.getElementById('archiveChartLegend'));
+}
+
+function drawAllCharts() {
+  drawChart(sortPlayers(state.data?.players ?? []), document.getElementById('ratingChart'));
+  const archiveSection = document.getElementById('archiveChartSection');
+  if (!archiveSection?.hidden) {
+    drawChart(sortPlayers(state.archiveData?.players ?? []), document.getElementById('archiveRatingChart'));
+  }
+}
+
+function drawChart(players, canvas) {
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
   canvas.width = Math.max(1, Math.floor(rect.width * dpr));
   canvas.height = Math.max(1, Math.floor(rect.height * dpr));
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -394,6 +456,13 @@ function modelLine(player) {
   const effort = player.reasoningEffort ? `${player.reasoningEffort} reasoning` : 'reasoning recorded';
   const games = Number(player.games ?? 0);
   return `${effort} / ${games} games`;
+}
+
+function teamLine(team) {
+  const mirrorGames = Number(team.mirrorGames ?? 0);
+  const file = team.file ? team.file.split('/').pop()?.replace(/\.txt$/i, '') : null;
+  const base = file || 'fixed sample';
+  return mirrorGames ? `${base} / ${mirrorGames} mirrors` : base;
 }
 
 function recordCell(player) {

@@ -148,6 +148,8 @@ assert.equal(modelLeague.snapshot.mode, 'model-vs-model-random-league');
 assert.equal(modelLeague.snapshot.matchmaking, 'random');
 assert.equal(modelLeague.snapshot.teamSelection, 'random');
 assert.equal(modelLeague.snapshot.teamPool.length, 2);
+assert.equal(modelLeague.snapshot.teams.length, 2);
+assert.ok(modelLeague.snapshot.teams.every(team => Number.isFinite(team.rating)));
 assert.equal(modelLeague.snapshot.players.length, 3);
 assert.ok(modelLeague.snapshot.recentMatches.every(match => match.p1.team?.id && match.p2.team?.id));
 

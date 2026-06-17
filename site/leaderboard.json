@@ -1,18 +1,42 @@
 {
-  "generatedAt": "2026-06-17T18:13:13.773Z",
+  "generatedAt": "2026-06-17T21:43:40.161Z",
   "benchmark": "Smogon LLM Arena",
-  "manifestName": "openai-champions-ou-ladder",
+  "manifestName": "champions-ou-openai-model-league",
+  "mode": "model-vs-model-random-league",
+  "track": "head-to-head",
+  "teamPolicy": "random-fixed-sample-team",
+  "matchmaking": "balanced-random",
+  "teamSelection": "random",
+  "teamPool": [
+    {
+      "id": "meganium-balance",
+      "name": "Meganium Balance",
+      "file": "data/teams/sample-pool/meganium-balance.txt"
+    },
+    {
+      "id": "glimmora-balance",
+      "name": "Glimmora Balance",
+      "file": "data/teams/sample-pool/glimmora-balance.txt"
+    },
+    {
+      "id": "delphox-balance",
+      "name": "Delphox Balance",
+      "file": "data/teams/sample-pool/delphox-balance.txt"
+    },
+    {
+      "id": "excadrill-offense",
+      "name": "Excadrill Offense",
+      "file": "data/teams/sample-pool/excadrill-offense.txt"
+    }
+  ],
   "season": {
-    "id": "champion-2026-06-16",
-    "name": "Champion Season",
-    "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T18:13:13.773Z",
-    "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
-    "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
+    "id": "model-league-2026-06-17",
+    "name": "Model League",
+    "startedAt": "2026-06-17T00:00:00.000Z",
+    "description": "OpenAI models play head-to-head on randomly assigned fixed sample teams.",
+    "resetPolicy": "Archive site/seasons/model-league-2026-06-17 before starting the next season.",
+    "archiveDir": "site/seasons"
   },
-  "mode": "pokemon-showdown-account-ladder",
-  "track": "champion",
-  "teamPolicy": "model-built-teams",
   "formatName": "[Gen 9 Champions] OU",
   "formatId": "gen9championsou",
   "battleType": "6v6 singles",
@@ -22,283 +46,82 @@
   "ratingSystem": {
     "name": "elo",
     "initialRating": 1500,
-    "kFactor": 32,
-    "liveInitialRating": 1000,
-    "liveRatingFloor": 1000,
-    "liveSource": "Pokemon Showdown public ladder rating observed at battle start, plus estimated final point"
+    "kFactor": 32
   },
-  "totalGames": 164,
+  "totalGames": 10,
   "health": {
-    "state": "degraded",
-    "generatedAt": "2026-06-17T18:13:13.773Z",
-    "lastBattleAt": "2026-06-17T06:53:32.633Z",
+    "ok": true,
+    "state": "active",
     "activePlayers": 4,
-    "totalPlayers": 4
+    "totalPlayers": 4,
+    "waitingPlayers": [],
+    "stalePlayers": [],
+    "lastBattleAt": "2026-06-17T21:43:40.155Z"
   },
   "players": [
     {
-      "id": "gpt-5.5",
-      "name": "OpenAI GPT-5.5",
+      "id": "o3",
+      "name": "OpenAI o3",
       "type": "openai",
-      "model": "gpt-5.5",
+      "model": "o3",
       "reasoningEffort": "medium",
-      "teamSource": "openai-generated",
-      "rating": 1304,
-      "benchmarkRating": 1304,
-      "ratingSource": "estimated-final",
-      "ratingDelta": -12,
-      "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1316,
-      "peakRating": 1323,
-      "floorRating": 1000,
-      "games": 34,
-      "wins": 20,
-      "losses": 14,
+      "teamFile": null,
+      "account": {
+        "username": null,
+        "usernameEnv": null,
+        "passwordEnv": null,
+        "configured": false
+      },
+      "rating": 1517,
+      "ratingDelta": 17,
+      "peakRating": 1517,
+      "floorRating": 1484,
+      "games": 5,
+      "wins": 3,
+      "losses": 2,
       "ties": 0,
-      "winRate": 0.5882,
-      "averageTurns": 22.8,
-      "choices": 908,
-      "invalidActions": 150,
-      "timeouts": 144,
-      "errors": 6,
-      "actionFailureRate": 0.3304,
+      "winRate": 0.6,
+      "averageTurns": 25.4,
+      "choices": 151,
+      "invalidActions": 0,
+      "timeouts": 105,
+      "errors": 0,
+      "actionFailureRate": 0.6954,
       "currentStreak": {
-        "kind": "loss",
-        "count": 2
+        "kind": "win",
+        "count": 1
       },
-      "liveStatus": {
-        "state": "error",
-        "label": "Error",
-        "updatedAt": "2026-06-17T12:33:11.913Z",
-        "lastEvent": "post-quota games removed; paused at clean game 34",
-        "battleRoomId": null,
-        "battleStartedAt": null,
-        "battleTurns": null,
-        "opponent": null,
-        "gamesCompleted": 34
-      },
-      "lastBattleAt": "2026-06-17T06:52:46.346Z",
-      "uniqueOpponents": 32,
+      "lastBattleAt": "2026-06-17T21:35:00.537Z",
       "ratingHistory": [
         {
           "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
+          "rating": 1500,
+          "at": null
         },
         {
           "battle": 1,
-          "rating": 1000,
-          "at": "2026-06-17T02:34:22.131Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 2,
-          "rating": 1000,
-          "at": "2026-06-17T02:42:06.212Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 3,
-          "rating": 1000,
-          "at": "2026-06-17T02:51:15.965Z",
-          "source": "battle-start"
+          "rating": 1484,
+          "at": "2026-06-17T20:49:36.799Z"
         },
         {
           "battle": 4,
-          "rating": 1000,
-          "at": "2026-06-17T03:07:11.423Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 5,
-          "rating": 1052,
-          "at": "2026-06-17T03:10:35.976Z",
-          "source": "battle-start"
+          "rating": 1501,
+          "at": "2026-06-17T21:12:56.585Z"
         },
         {
           "battle": 6,
-          "rating": 1081,
-          "at": "2026-06-17T03:12:13.513Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 7,
-          "rating": 1054,
-          "at": "2026-06-17T03:25:42.970Z",
-          "source": "battle-start"
+          "rating": 1517,
+          "at": "2026-06-17T21:20:47.829Z"
         },
         {
           "battle": 8,
-          "rating": 1036,
-          "at": "2026-06-17T03:35:13.618Z",
-          "source": "battle-start"
+          "rating": 1500,
+          "at": "2026-06-17T21:29:49.783Z"
         },
         {
           "battle": 9,
-          "rating": 1067,
-          "at": "2026-06-17T03:43:42.593Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 10,
-          "rating": 1091,
-          "at": "2026-06-17T03:48:20.255Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 11,
-          "rating": 1114,
-          "at": "2026-06-17T03:52:01.216Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 12,
-          "rating": 1082,
-          "at": "2026-06-17T03:59:20.962Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 13,
-          "rating": 1103,
-          "at": "2026-06-17T04:02:17.459Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 14,
-          "rating": 1121,
-          "at": "2026-06-17T04:02:59.279Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 15,
-          "rating": 1100,
-          "at": "2026-06-17T04:12:09.371Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 16,
-          "rating": 1125,
-          "at": "2026-06-17T04:13:36.318Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 17,
-          "rating": 1161,
-          "at": "2026-06-17T04:15:35.579Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 18,
-          "rating": 1194,
-          "at": "2026-06-17T04:26:55.736Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 19,
-          "rating": 1180,
-          "at": "2026-06-17T04:36:45.939Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 20,
-          "rating": 1148,
-          "at": "2026-06-17T04:46:17.684Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 21,
-          "rating": 1174,
-          "at": "2026-06-17T04:48:09.931Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 22,
-          "rating": 1161,
-          "at": "2026-06-17T05:07:18.699Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 23,
-          "rating": 1185,
-          "at": "2026-06-17T05:12:19.613Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 24,
-          "rating": 1206,
-          "at": "2026-06-17T05:19:51.198Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 25,
-          "rating": 1236,
-          "at": "2026-06-17T05:24:51.234Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 26,
-          "rating": 1224,
-          "at": "2026-06-17T05:32:17.803Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 27,
-          "rating": 1244,
-          "at": "2026-06-17T05:42:10.218Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 28,
-          "rating": 1259,
-          "at": "2026-06-17T05:49:49.444Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 29,
-          "rating": 1276,
-          "at": "2026-06-17T05:55:20.755Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 30,
-          "rating": 1313,
-          "at": "2026-06-17T06:07:50.337Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 31,
-          "rating": 1320,
-          "at": "2026-06-17T06:11:30.653Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 32,
-          "rating": 1294,
-          "at": "2026-06-17T06:27:19.657Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 33,
-          "rating": 1323,
-          "at": "2026-06-17T06:39:10.768Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 34,
-          "rating": 1316,
-          "at": "2026-06-17T06:46:21.513Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 34,
-          "rating": 1304,
-          "at": "2026-06-17T06:52:46.346Z",
-          "source": "estimated-final",
-          "outcome": "loss",
-          "ratingBefore": 1316,
-          "opponentRating": 1413,
-          "delta": -12
+          "rating": 1517,
+          "at": "2026-06-17T21:35:00.537Z"
         }
       ]
     },
@@ -308,365 +131,129 @@
       "type": "openai",
       "model": "gpt-5.2",
       "reasoningEffort": "medium",
-      "teamSource": "openai-generated",
-      "rating": 1185,
-      "benchmarkRating": 1185,
-      "ratingSource": "estimated-final",
-      "ratingDelta": 16,
-      "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1169,
-      "peakRating": 1185,
-      "floorRating": 1000,
-      "games": 57,
-      "wins": 26,
-      "losses": 31,
+      "teamFile": null,
+      "account": {
+        "username": null,
+        "usernameEnv": null,
+        "passwordEnv": null,
+        "configured": false
+      },
+      "rating": 1517,
+      "ratingDelta": 14,
+      "peakRating": 1517,
+      "floorRating": 1484,
+      "games": 5,
+      "wins": 3,
+      "losses": 2,
       "ties": 0,
-      "winRate": 0.4561,
-      "averageTurns": 27.7,
-      "choices": 1804,
-      "invalidActions": 49,
-      "timeouts": 49,
+      "winRate": 0.6,
+      "averageTurns": 24,
+      "choices": 156,
+      "invalidActions": 0,
+      "timeouts": 37,
       "errors": 0,
-      "actionFailureRate": 0.0543,
+      "actionFailureRate": 0.2372,
       "currentStreak": {
         "kind": "win",
-        "count": 1
+        "count": 2
       },
-      "liveStatus": {
-        "state": "error",
-        "label": "Error",
-        "updatedAt": "2026-06-17T12:33:11.902Z",
-        "lastEvent": "post-quota games removed; paused at clean game 57",
-        "battleRoomId": null,
-        "battleStartedAt": null,
-        "battleTurns": null,
-        "opponent": null,
-        "gamesCompleted": 57
-      },
-      "lastBattleAt": "2026-06-17T06:51:58.149Z",
-      "uniqueOpponents": 48,
+      "lastBattleAt": "2026-06-17T21:43:40.155Z",
       "ratingHistory": [
         {
           "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
-        },
-        {
-          "battle": 1,
-          "rating": 1000,
-          "at": "2026-06-16T23:18:12.827Z",
-          "source": "battle-start"
+          "rating": 1500,
+          "at": null
         },
         {
           "battle": 2,
-          "rating": 1000,
-          "at": "2026-06-16T23:36:37.692Z",
-          "source": "battle-start"
+          "rating": 1484,
+          "at": "2026-06-17T20:54:01.052Z"
         },
         {
           "battle": 3,
-          "rating": 1000,
-          "at": "2026-06-16T23:40:09.005Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 4,
-          "rating": 1000,
-          "at": "2026-06-16T23:43:13.634Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 5,
-          "rating": 1000,
-          "at": "2026-06-17T00:10:22.803Z",
-          "source": "battle-start"
+          "rating": 1501,
+          "at": "2026-06-17T21:07:14.030Z"
         },
         {
           "battle": 6,
-          "rating": 1000,
-          "at": "2026-06-17T00:27:37.945Z",
-          "source": "battle-start"
+          "rating": 1485,
+          "at": "2026-06-17T21:20:47.829Z"
         },
         {
           "battle": 8,
-          "rating": 1041,
-          "at": "2026-06-17T00:44:42.298Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 9,
-          "rating": 1046,
-          "at": "2026-06-17T00:43:01.148Z",
-          "source": "battle-start"
+          "rating": 1503,
+          "at": "2026-06-17T21:29:49.783Z"
         },
         {
           "battle": 10,
-          "rating": 1032,
-          "at": "2026-06-17T00:45:55.849Z",
-          "source": "battle-start"
+          "rating": 1517,
+          "at": "2026-06-17T21:43:40.155Z"
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.5",
+      "name": "OpenAI GPT-5.5",
+      "type": "openai",
+      "model": "gpt-5.5",
+      "reasoningEffort": "medium",
+      "teamFile": null,
+      "account": {
+        "username": null,
+        "usernameEnv": null,
+        "passwordEnv": null,
+        "configured": false
+      },
+      "rating": 1512,
+      "ratingDelta": -17,
+      "peakRating": 1529,
+      "floorRating": 1499,
+      "games": 5,
+      "wins": 3,
+      "losses": 2,
+      "ties": 0,
+      "winRate": 0.6,
+      "averageTurns": 26,
+      "choices": 156,
+      "invalidActions": 0,
+      "timeouts": 114,
+      "errors": 0,
+      "actionFailureRate": 0.7308,
+      "currentStreak": {
+        "kind": "loss",
+        "count": 1
+      },
+      "lastBattleAt": "2026-06-17T21:35:00.537Z",
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1500,
+          "at": null
         },
         {
-          "battle": 11,
-          "rating": 1080,
-          "at": "2026-06-17T00:48:41.287Z",
-          "source": "battle-start"
+          "battle": 1,
+          "rating": 1516,
+          "at": "2026-06-17T20:49:36.799Z"
         },
         {
-          "battle": 14,
-          "rating": 1024,
-          "at": "2026-06-17T01:12:44.165Z",
-          "source": "battle-start"
+          "battle": 4,
+          "rating": 1499,
+          "at": "2026-06-17T21:12:56.585Z"
         },
         {
-          "battle": 16,
-          "rating": 1092,
-          "at": "2026-06-17T01:27:33.357Z",
-          "source": "battle-start"
+          "battle": 5,
+          "rating": 1515,
+          "at": "2026-06-17T21:17:40.137Z"
         },
         {
-          "battle": 18,
-          "rating": 1079,
-          "at": "2026-06-17T02:03:57.583Z",
-          "source": "battle-start"
+          "battle": 7,
+          "rating": 1529,
+          "at": "2026-06-17T21:24:51.614Z"
         },
         {
-          "battle": 19,
-          "rating": 1062,
-          "at": "2026-06-17T02:12:47.522Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 20,
-          "rating": 1089,
-          "at": "2026-06-17T02:20:34.332Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 22,
-          "rating": 1082,
-          "at": "2026-06-17T02:44:28.039Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 23,
-          "rating": 1067,
-          "at": "2026-06-17T02:54:39.189Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 24,
-          "rating": 1091,
-          "at": "2026-06-17T02:55:04.664Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 25,
-          "rating": 1073,
-          "at": "2026-06-17T03:06:55.002Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 26,
-          "rating": 1058,
-          "at": "2026-06-17T03:14:52.403Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 27,
-          "rating": 1092,
-          "at": "2026-06-17T03:25:41.951Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 28,
-          "rating": 1115,
-          "at": "2026-06-17T03:36:06.463Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 29,
-          "rating": 1094,
-          "at": "2026-06-17T03:43:57.947Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 30,
-          "rating": 1085,
-          "at": "2026-06-17T04:00:59.986Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 31,
-          "rating": 1112,
-          "at": "2026-06-17T04:04:54.381Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 32,
-          "rating": 1140,
-          "at": "2026-06-17T04:07:50.119Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 33,
-          "rating": 1155,
-          "at": "2026-06-17T04:08:38.739Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 34,
-          "rating": 1177,
-          "at": "2026-06-17T04:12:46.036Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 35,
-          "rating": 1146,
-          "at": "2026-06-17T04:27:23.740Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 36,
-          "rating": 1132,
-          "at": "2026-06-17T04:31:36.128Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 37,
-          "rating": 1098,
-          "at": "2026-06-17T04:38:32.800Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 38,
-          "rating": 1116,
-          "at": "2026-06-17T04:53:29.828Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 39,
-          "rating": 1134,
-          "at": "2026-06-17T04:55:00.989Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 40,
-          "rating": 1110,
-          "at": "2026-06-17T05:00:57.018Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 41,
-          "rating": 1077,
-          "at": "2026-06-17T05:08:35.865Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 42,
-          "rating": 1062,
-          "at": "2026-06-17T05:14:21.775Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 43,
-          "rating": 1046,
-          "at": "2026-06-17T05:17:54.974Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 44,
-          "rating": 1075,
-          "at": "2026-06-17T05:19:30.822Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 45,
-          "rating": 1058,
-          "at": "2026-06-17T05:26:41.215Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 46,
-          "rating": 1095,
-          "at": "2026-06-17T05:35:31.560Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 47,
-          "rating": 1067,
-          "at": "2026-06-17T05:46:39.821Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 48,
-          "rating": 1108,
-          "at": "2026-06-17T05:52:42.954Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 49,
-          "rating": 1138,
-          "at": "2026-06-17T05:59:36.658Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 50,
-          "rating": 1154,
-          "at": "2026-06-17T06:04:48.232Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 51,
-          "rating": 1125,
-          "at": "2026-06-17T06:12:03.879Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 52,
-          "rating": 1144,
-          "at": "2026-06-17T06:16:24.186Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 53,
-          "rating": 1112,
-          "at": "2026-06-17T06:24:22.264Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 54,
-          "rating": 1146,
-          "at": "2026-06-17T06:28:43.307Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 55,
-          "rating": 1164,
-          "at": "2026-06-17T06:29:37.411Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 56,
-          "rating": 1182,
-          "at": "2026-06-17T06:35:09.588Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 57,
-          "rating": 1169,
-          "at": "2026-06-17T06:43:02.864Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 57,
-          "rating": 1185,
-          "at": "2026-06-17T06:51:58.149Z",
-          "source": "estimated-final",
-          "outcome": "win",
-          "ratingBefore": 1169,
-          "opponentRating": 1175,
-          "delta": 16
+          "battle": 9,
+          "rating": 1512,
+          "at": "2026-06-17T21:35:00.537Z"
         }
       ]
     },
@@ -676,527 +263,777 @@
       "type": "openai",
       "model": "gpt-5.4",
       "reasoningEffort": "medium",
-      "teamSource": "openai-generated",
-      "rating": 1130,
-      "benchmarkRating": 1130,
-      "ratingSource": "estimated-final",
-      "ratingDelta": -23,
-      "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1153,
-      "peakRating": 1186,
-      "floorRating": 1000,
-      "games": 50,
-      "wins": 22,
-      "losses": 28,
+      "teamFile": null,
+      "account": {
+        "username": null,
+        "usernameEnv": null,
+        "passwordEnv": null,
+        "configured": false
+      },
+      "rating": 1454,
+      "ratingDelta": -14,
+      "peakRating": 1516,
+      "floorRating": 1454,
+      "games": 5,
+      "wins": 1,
+      "losses": 4,
       "ties": 0,
-      "winRate": 0.44,
-      "averageTurns": 23.3,
-      "choices": 1334,
-      "invalidActions": 158,
-      "timeouts": 127,
-      "errors": 30,
-      "actionFailureRate": 0.2361,
+      "winRate": 0.2,
+      "averageTurns": 24.6,
+      "choices": 156,
+      "invalidActions": 0,
+      "timeouts": 102,
+      "errors": 0,
+      "actionFailureRate": 0.6538,
       "currentStreak": {
         "kind": "loss",
-        "count": 1
+        "count": 4
       },
-      "liveStatus": {
-        "state": "error",
-        "label": "Error",
-        "updatedAt": "2026-06-17T12:33:11.910Z",
-        "lastEvent": "post-quota games removed; paused at clean game 50",
-        "battleRoomId": null,
-        "battleStartedAt": null,
-        "battleTurns": null,
-        "opponent": null,
-        "gamesCompleted": 50
-      },
-      "lastBattleAt": "2026-06-17T06:53:32.633Z",
-      "uniqueOpponents": 45,
+      "lastBattleAt": "2026-06-17T21:43:40.155Z",
       "ratingHistory": [
         {
           "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
-        },
-        {
-          "battle": 1,
-          "rating": 1000,
-          "at": "2026-06-16T23:18:23.068Z",
-          "source": "battle-start"
+          "rating": 1500,
+          "at": null
         },
         {
           "battle": 2,
-          "rating": 1000,
-          "at": "2026-06-16T23:36:52.500Z",
-          "source": "battle-start"
+          "rating": 1516,
+          "at": "2026-06-17T20:54:01.052Z"
         },
         {
           "battle": 3,
-          "rating": 1000,
-          "at": "2026-06-17T00:42:41.526Z",
-          "source": "battle-start"
+          "rating": 1499,
+          "at": "2026-06-17T21:07:14.030Z"
         },
         {
           "battle": 5,
-          "rating": 1017,
-          "at": "2026-06-17T01:06:55.933Z",
-          "source": "battle-start"
+          "rating": 1483,
+          "at": "2026-06-17T21:17:40.137Z"
         },
         {
-          "battle": 6,
-          "rating": 1006,
-          "at": "2026-06-17T01:21:41.987Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 8,
-          "rating": 1060,
-          "at": "2026-06-17T01:38:34.731Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 9,
-          "rating": 1094,
-          "at": "2026-06-17T01:46:08.283Z",
-          "source": "battle-start"
+          "battle": 7,
+          "rating": 1468,
+          "at": "2026-06-17T21:24:51.614Z"
         },
         {
           "battle": 10,
-          "rating": 1072,
-          "at": "2026-06-17T01:54:03.005Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 11,
-          "rating": 1037,
-          "at": "2026-06-17T02:04:53.045Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 12,
-          "rating": 1081,
-          "at": "2026-06-17T02:10:19.539Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 13,
-          "rating": 1114,
-          "at": "2026-06-17T02:16:22.260Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 14,
-          "rating": 1098,
-          "at": "2026-06-17T02:24:00.025Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 15,
-          "rating": 1080,
-          "at": "2026-06-17T02:34:30.594Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 16,
-          "rating": 1107,
-          "at": "2026-06-17T02:41:31.814Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 17,
-          "rating": 1125,
-          "at": "2026-06-17T02:44:49.756Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 18,
-          "rating": 1099,
-          "at": "2026-06-17T02:54:14.571Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 19,
-          "rating": 1088,
-          "at": "2026-06-17T03:06:49.260Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 20,
-          "rating": 1115,
-          "at": "2026-06-17T03:12:01.688Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 21,
-          "rating": 1091,
-          "at": "2026-06-17T03:25:14.179Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 22,
-          "rating": 1064,
-          "at": "2026-06-17T03:35:42.310Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 23,
-          "rating": 1096,
-          "at": "2026-06-17T03:42:57.318Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 24,
-          "rating": 1073,
-          "at": "2026-06-17T03:50:14.655Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 25,
-          "rating": 1099,
-          "at": "2026-06-17T03:51:46.713Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 26,
-          "rating": 1131,
-          "at": "2026-06-17T03:56:49.181Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 27,
-          "rating": 1162,
-          "at": "2026-06-17T04:00:37.218Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 28,
-          "rating": 1180,
-          "at": "2026-06-17T04:05:17.730Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 29,
-          "rating": 1143,
-          "at": "2026-06-17T04:14:04.128Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 30,
-          "rating": 1161,
-          "at": "2026-06-17T04:25:24.956Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 31,
-          "rating": 1186,
-          "at": "2026-06-17T04:29:59.541Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 32,
-          "rating": 1165,
-          "at": "2026-06-17T04:41:07.016Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 33,
-          "rating": 1153,
-          "at": "2026-06-17T04:50:33.497Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 34,
-          "rating": 1138,
-          "at": "2026-06-17T04:57:27.705Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 35,
-          "rating": 1121,
-          "at": "2026-06-17T05:10:18.799Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 36,
-          "rating": 1093,
-          "at": "2026-06-17T05:16:13.087Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 37,
-          "rating": 1076,
-          "at": "2026-06-17T05:27:05.937Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 38,
-          "rating": 1055,
-          "at": "2026-06-17T05:35:18.743Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 39,
-          "rating": 1102,
-          "at": "2026-06-17T05:37:06.163Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 40,
-          "rating": 1074,
-          "at": "2026-06-17T05:42:20.794Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 41,
-          "rating": 1097,
-          "at": "2026-06-17T05:49:57.784Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 42,
-          "rating": 1066,
-          "at": "2026-06-17T05:53:43.167Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 43,
-          "rating": 1050,
-          "at": "2026-06-17T06:05:33.235Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 44,
-          "rating": 1094,
-          "at": "2026-06-17T06:09:23.944Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 45,
-          "rating": 1064,
-          "at": "2026-06-17T06:18:01.569Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 46,
-          "rating": 1043,
-          "at": "2026-06-17T06:29:14.554Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 47,
-          "rating": 1086,
-          "at": "2026-06-17T06:34:36.706Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 48,
-          "rating": 1117,
-          "at": "2026-06-17T06:36:09.480Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 49,
-          "rating": 1134,
-          "at": "2026-06-17T06:39:38.166Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 50,
-          "rating": 1153,
-          "at": "2026-06-17T06:46:51.109Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 50,
-          "rating": 1130,
-          "at": "2026-06-17T06:53:32.633Z",
-          "source": "estimated-final",
-          "outcome": "loss",
-          "ratingBefore": 1153,
-          "opponentRating": 1000,
-          "delta": -23
-        }
-      ]
-    },
-    {
-      "id": "o3",
-      "name": "OpenAI o3",
-      "type": "openai",
-      "model": "o3",
-      "reasoningEffort": "medium",
-      "teamSource": "openai-generated",
-      "rating": 1000,
-      "benchmarkRating": 1000,
-      "ratingSource": "estimated-final",
-      "ratingDelta": -7,
-      "ratingDeltaSource": "estimated-final",
-      "ratingDeltaPrevious": 1007,
-      "peakRating": 1053,
-      "floorRating": 1000,
-      "games": 23,
-      "wins": 4,
-      "losses": 19,
-      "ties": 0,
-      "winRate": 0.1739,
-      "averageTurns": 24.6,
-      "choices": 548,
-      "invalidActions": 35,
-      "timeouts": 32,
-      "errors": 1,
-      "actionFailureRate": 0.1241,
-      "currentStreak": {
-        "kind": "loss",
-        "count": 5
-      },
-      "liveStatus": {
-        "state": "stopped",
-        "label": "Stopped",
-        "updatedAt": "2026-06-17T04:21:12.000Z",
-        "lastEvent": "stopped by operator; history retained",
-        "battleRoomId": null,
-        "battleStartedAt": null,
-        "battleTurns": null,
-        "opponent": null,
-        "gamesCompleted": 4
-      },
-      "lastBattleAt": "2026-06-17T04:17:23.438Z",
-      "uniqueOpponents": 21,
-      "ratingHistory": [
-        {
-          "battle": 0,
-          "rating": 1000,
-          "at": null,
-          "source": "initial"
-        },
-        {
-          "battle": 1,
-          "rating": 1000,
-          "at": "2026-06-16T23:17:24.474Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 2,
-          "rating": 1000,
-          "at": "2026-06-17T00:31:13.507Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 3,
-          "rating": 1040,
-          "at": "2026-06-17T00:43:33.520Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 5,
-          "rating": 1000,
-          "at": "2026-06-17T00:45:00.061Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 6,
-          "rating": 1053,
-          "at": "2026-06-17T00:45:56.714Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 9,
-          "rating": 1010,
-          "at": "2026-06-17T01:22:25.413Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 11,
-          "rating": 1022,
-          "at": "2026-06-17T01:36:02.224Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 12,
-          "rating": 1002,
-          "at": "2026-06-17T02:04:37.281Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 13,
-          "rating": 1000,
-          "at": "2026-06-17T02:15:46.967Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 15,
-          "rating": 1023,
-          "at": "2026-06-17T02:46:40.478Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 16,
-          "rating": 1009,
-          "at": "2026-06-17T02:52:07.740Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 17,
-          "rating": 1000,
-          "at": "2026-06-17T03:06:41.888Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 18,
-          "rating": 1000,
-          "at": "2026-06-17T03:15:44.941Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 19,
-          "rating": 1053,
-          "at": "2026-06-17T03:25:16.889Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 20,
-          "rating": 1039,
-          "at": "2026-06-17T03:44:00.826Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 21,
-          "rating": 1029,
-          "at": "2026-06-17T03:55:12.854Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 22,
-          "rating": 1018,
-          "at": "2026-06-17T04:03:00.766Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 23,
-          "rating": 1007,
-          "at": "2026-06-17T04:09:03.938Z",
-          "source": "battle-start"
-        },
-        {
-          "battle": 23,
-          "rating": 1000,
-          "at": "2026-06-17T04:17:23.438Z",
-          "source": "estimated-final",
-          "outcome": "loss",
-          "ratingBefore": 1007,
-          "opponentRating": 1000,
-          "delta": -7
+          "rating": 1454,
+          "at": "2026-06-17T21:43:40.155Z"
         }
       ]
     }
   ],
-  "disabledPlayers": [
+  "teams": [
     {
-      "id": "gpt-5.5-high",
-      "model": "gpt-5.5",
-      "reasoningEffort": "high",
-      "reason": null
+      "id": "excadrill-offense",
+      "name": "Excadrill Offense",
+      "file": "data/teams/sample-pool/excadrill-offense.txt",
+      "rating": 1544,
+      "peakRating": 1544,
+      "floorRating": 1500,
+      "games": 5,
+      "wins": 4,
+      "losses": 1,
+      "turns": 133,
+      "mirrorGames": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1500,
+          "at": null
+        },
+        {
+          "battle": 1,
+          "rating": 1516,
+          "at": "2026-06-17T20:49:36.799Z"
+        },
+        {
+          "battle": 2,
+          "rating": 1531,
+          "at": "2026-06-17T20:54:01.052Z"
+        },
+        {
+          "battle": 3,
+          "rating": 1514,
+          "at": "2026-06-17T21:07:14.030Z"
+        },
+        {
+          "battle": 4,
+          "rating": 1530,
+          "at": "2026-06-17T21:12:56.585Z"
+        },
+        {
+          "battle": 9,
+          "rating": 1544,
+          "at": "2026-06-17T21:35:00.537Z"
+        }
+      ],
+      "ratingDelta": 14,
+      "winRate": 0.8,
+      "averageTurns": 26.6
+    },
+    {
+      "id": "glimmora-balance",
+      "name": "Glimmora Balance",
+      "file": "data/teams/sample-pool/glimmora-balance.txt",
+      "rating": 1489,
+      "peakRating": 1517,
+      "floorRating": 1468,
+      "games": 9,
+      "wins": 4,
+      "losses": 5,
+      "turns": 209,
+      "mirrorGames": 1,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1500,
+          "at": null
+        },
+        {
+          "battle": 3,
+          "rating": 1517,
+          "at": "2026-06-17T21:07:14.030Z"
+        },
+        {
+          "battle": 4,
+          "rating": 1501,
+          "at": "2026-06-17T21:12:56.585Z"
+        },
+        {
+          "battle": 5,
+          "rating": 1501,
+          "at": "2026-06-17T21:17:40.137Z",
+          "source": "same-team-match"
+        },
+        {
+          "battle": 6,
+          "rating": 1484,
+          "at": "2026-06-17T21:20:47.829Z"
+        },
+        {
+          "battle": 7,
+          "rating": 1468,
+          "at": "2026-06-17T21:24:51.614Z"
+        },
+        {
+          "battle": 8,
+          "rating": 1486,
+          "at": "2026-06-17T21:29:49.783Z"
+        },
+        {
+          "battle": 9,
+          "rating": 1472,
+          "at": "2026-06-17T21:35:00.537Z"
+        },
+        {
+          "battle": 10,
+          "rating": 1489,
+          "at": "2026-06-17T21:43:40.155Z"
+        }
+      ],
+      "ratingDelta": 17,
+      "winRate": 0.4444,
+      "averageTurns": 23.2
+    },
+    {
+      "id": "delphox-balance",
+      "name": "Delphox Balance",
+      "file": "data/teams/sample-pool/delphox-balance.txt",
+      "rating": 1483,
+      "peakRating": 1501,
+      "floorRating": 1483,
+      "games": 3,
+      "wins": 1,
+      "losses": 2,
+      "turns": 94,
+      "mirrorGames": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1500,
+          "at": null
+        },
+        {
+          "battle": 1,
+          "rating": 1484,
+          "at": "2026-06-17T20:49:36.799Z"
+        },
+        {
+          "battle": 6,
+          "rating": 1501,
+          "at": "2026-06-17T21:20:47.829Z"
+        },
+        {
+          "battle": 10,
+          "rating": 1483,
+          "at": "2026-06-17T21:43:40.155Z"
+        }
+      ],
+      "ratingDelta": -18,
+      "winRate": 0.3333,
+      "averageTurns": 31.3
+    },
+    {
+      "id": "meganium-balance",
+      "name": "Meganium Balance",
+      "file": "data/teams/sample-pool/meganium-balance.txt",
+      "rating": 1483,
+      "peakRating": 1501,
+      "floorRating": 1483,
+      "games": 3,
+      "wins": 1,
+      "losses": 2,
+      "turns": 64,
+      "mirrorGames": 0,
+      "ratingHistory": [
+        {
+          "battle": 0,
+          "rating": 1500,
+          "at": null
+        },
+        {
+          "battle": 2,
+          "rating": 1485,
+          "at": "2026-06-17T20:54:01.052Z"
+        },
+        {
+          "battle": 7,
+          "rating": 1501,
+          "at": "2026-06-17T21:24:51.614Z"
+        },
+        {
+          "battle": 8,
+          "rating": 1483,
+          "at": "2026-06-17T21:29:49.783Z"
+        }
+      ],
+      "ratingDelta": -18,
+      "winRate": 0.3333,
+      "averageTurns": 21.3
+    }
+  ],
+  "recentMatches": [
+    {
+      "id": "battle-000010",
+      "startedAt": "2026-06-17T21:35:00.546Z",
+      "finishedAt": "2026-06-17T21:43:40.155Z",
+      "seed": 20260626,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.2",
+        "name": "OpenAI GPT-5.2",
+        "model": "gpt-5.2",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 52,
+        "invalidActions": 0,
+        "timeouts": 10,
+        "errors": 0,
+        "ratingBefore": 1503,
+        "ratingAfter": 1517,
+        "ratingDelta": 14
+      },
+      "p2": {
+        "id": "gpt-5.4",
+        "name": "OpenAI GPT-5.4",
+        "model": "gpt-5.4",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "delphox-balance",
+          "name": "Delphox Balance",
+          "file": "data/teams/sample-pool/delphox-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/delphox-balance.txt",
+        "choices": 51,
+        "invalidActions": 0,
+        "timeouts": 38,
+        "errors": 0,
+        "ratingBefore": 1468,
+        "ratingAfter": 1454,
+        "ratingDelta": -14
+      },
+      "winnerId": "gpt-5.2",
+      "winnerName": "OpenAI GPT-5.2",
+      "tie": false,
+      "turns": 40
+    },
+    {
+      "id": "battle-000009",
+      "startedAt": "2026-06-17T21:29:49.792Z",
+      "finishedAt": "2026-06-17T21:35:00.537Z",
+      "seed": 20260625,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.5",
+        "name": "OpenAI GPT-5.5",
+        "model": "gpt-5.5",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 29,
+        "invalidActions": 0,
+        "timeouts": 23,
+        "errors": 0,
+        "ratingBefore": 1529,
+        "ratingAfter": 1512,
+        "ratingDelta": -17
+      },
+      "p2": {
+        "id": "o3",
+        "name": "OpenAI o3",
+        "model": "o3",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "excadrill-offense",
+          "name": "Excadrill Offense",
+          "file": "data/teams/sample-pool/excadrill-offense.txt"
+        },
+        "teamFile": "data/teams/sample-pool/excadrill-offense.txt",
+        "choices": 28,
+        "invalidActions": 0,
+        "timeouts": 23,
+        "errors": 0,
+        "ratingBefore": 1500,
+        "ratingAfter": 1517,
+        "ratingDelta": 17
+      },
+      "winnerId": "o3",
+      "winnerName": "OpenAI o3",
+      "tie": false,
+      "turns": 23
+    },
+    {
+      "id": "battle-000008",
+      "startedAt": "2026-06-17T21:24:51.629Z",
+      "finishedAt": "2026-06-17T21:29:49.783Z",
+      "seed": 20260624,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "o3",
+        "name": "OpenAI o3",
+        "model": "o3",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "meganium-balance",
+          "name": "Meganium Balance",
+          "file": "data/teams/sample-pool/meganium-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/meganium-balance.txt",
+        "choices": 29,
+        "invalidActions": 0,
+        "timeouts": 19,
+        "errors": 0,
+        "ratingBefore": 1517,
+        "ratingAfter": 1500,
+        "ratingDelta": -17
+      },
+      "p2": {
+        "id": "gpt-5.2",
+        "name": "OpenAI GPT-5.2",
+        "model": "gpt-5.2",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 30,
+        "invalidActions": 0,
+        "timeouts": 5,
+        "errors": 0,
+        "ratingBefore": 1485,
+        "ratingAfter": 1503,
+        "ratingDelta": 17
+      },
+      "winnerId": "gpt-5.2",
+      "winnerName": "OpenAI GPT-5.2",
+      "tie": false,
+      "turns": 23
+    },
+    {
+      "id": "battle-000007",
+      "startedAt": "2026-06-17T21:20:47.833Z",
+      "finishedAt": "2026-06-17T21:24:51.614Z",
+      "seed": 20260623,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.4",
+        "name": "OpenAI GPT-5.4",
+        "model": "gpt-5.4",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 25,
+        "invalidActions": 0,
+        "timeouts": 14,
+        "errors": 0,
+        "ratingBefore": 1483,
+        "ratingAfter": 1468,
+        "ratingDelta": -15
+      },
+      "p2": {
+        "id": "gpt-5.5",
+        "name": "OpenAI GPT-5.5",
+        "model": "gpt-5.5",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "meganium-balance",
+          "name": "Meganium Balance",
+          "file": "data/teams/sample-pool/meganium-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/meganium-balance.txt",
+        "choices": 22,
+        "invalidActions": 0,
+        "timeouts": 12,
+        "errors": 0,
+        "ratingBefore": 1515,
+        "ratingAfter": 1529,
+        "ratingDelta": 15
+      },
+      "winnerId": "gpt-5.5",
+      "winnerName": "OpenAI GPT-5.5",
+      "tie": false,
+      "turns": 19
+    },
+    {
+      "id": "battle-000006",
+      "startedAt": "2026-06-17T21:17:40.142Z",
+      "finishedAt": "2026-06-17T21:20:47.829Z",
+      "seed": 20260622,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "o3",
+        "name": "OpenAI o3",
+        "model": "o3",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "delphox-balance",
+          "name": "Delphox Balance",
+          "file": "data/teams/sample-pool/delphox-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/delphox-balance.txt",
+        "choices": 17,
+        "invalidActions": 0,
+        "timeouts": 7,
+        "errors": 0,
+        "ratingBefore": 1501,
+        "ratingAfter": 1517,
+        "ratingDelta": 16
+      },
+      "p2": {
+        "id": "gpt-5.2",
+        "name": "OpenAI GPT-5.2",
+        "model": "gpt-5.2",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 21,
+        "invalidActions": 0,
+        "timeouts": 6,
+        "errors": 0,
+        "ratingBefore": 1501,
+        "ratingAfter": 1485,
+        "ratingDelta": -16
+      },
+      "winnerId": "o3",
+      "winnerName": "OpenAI o3",
+      "tie": false,
+      "turns": 14
+    },
+    {
+      "id": "battle-000005",
+      "startedAt": "2026-06-17T21:12:56.592Z",
+      "finishedAt": "2026-06-17T21:17:40.137Z",
+      "seed": 20260621,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.5",
+        "name": "OpenAI GPT-5.5",
+        "model": "gpt-5.5",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 26,
+        "invalidActions": 0,
+        "timeouts": 18,
+        "errors": 0,
+        "ratingBefore": 1499,
+        "ratingAfter": 1515,
+        "ratingDelta": 16
+      },
+      "p2": {
+        "id": "gpt-5.4",
+        "name": "OpenAI GPT-5.4",
+        "model": "gpt-5.4",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 27,
+        "invalidActions": 0,
+        "timeouts": 13,
+        "errors": 0,
+        "ratingBefore": 1499,
+        "ratingAfter": 1483,
+        "ratingDelta": -16
+      },
+      "winnerId": "gpt-5.5",
+      "winnerName": "OpenAI GPT-5.5",
+      "tie": false,
+      "turns": 21
+    },
+    {
+      "id": "battle-000004",
+      "startedAt": "2026-06-17T21:07:14.041Z",
+      "finishedAt": "2026-06-17T21:12:56.585Z",
+      "seed": 20260620,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.5",
+        "name": "OpenAI GPT-5.5",
+        "model": "gpt-5.5",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 33,
+        "invalidActions": 0,
+        "timeouts": 25,
+        "errors": 0,
+        "ratingBefore": 1516,
+        "ratingAfter": 1499,
+        "ratingDelta": -17
+      },
+      "p2": {
+        "id": "o3",
+        "name": "OpenAI o3",
+        "model": "o3",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "excadrill-offense",
+          "name": "Excadrill Offense",
+          "file": "data/teams/sample-pool/excadrill-offense.txt"
+        },
+        "teamFile": "data/teams/sample-pool/excadrill-offense.txt",
+        "choices": 31,
+        "invalidActions": 0,
+        "timeouts": 23,
+        "errors": 0,
+        "ratingBefore": 1484,
+        "ratingAfter": 1501,
+        "ratingDelta": 17
+      },
+      "winnerId": "o3",
+      "winnerName": "OpenAI o3",
+      "tie": false,
+      "turns": 27
+    },
+    {
+      "id": "battle-000003",
+      "startedAt": "2026-06-17T21:02:47.270Z",
+      "finishedAt": "2026-06-17T21:07:14.030Z",
+      "seed": 20260619,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.4",
+        "name": "OpenAI GPT-5.4",
+        "model": "gpt-5.4",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "excadrill-offense",
+          "name": "Excadrill Offense",
+          "file": "data/teams/sample-pool/excadrill-offense.txt"
+        },
+        "teamFile": "data/teams/sample-pool/excadrill-offense.txt",
+        "choices": 27,
+        "invalidActions": 0,
+        "timeouts": 20,
+        "errors": 0,
+        "ratingBefore": 1516,
+        "ratingAfter": 1499,
+        "ratingDelta": -17
+      },
+      "p2": {
+        "id": "gpt-5.2",
+        "name": "OpenAI GPT-5.2",
+        "model": "gpt-5.2",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "glimmora-balance",
+          "name": "Glimmora Balance",
+          "file": "data/teams/sample-pool/glimmora-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/glimmora-balance.txt",
+        "choices": 25,
+        "invalidActions": 0,
+        "timeouts": 8,
+        "errors": 0,
+        "ratingBefore": 1484,
+        "ratingAfter": 1501,
+        "ratingDelta": 17
+      },
+      "winnerId": "gpt-5.2",
+      "winnerName": "OpenAI GPT-5.2",
+      "tie": false,
+      "turns": 21
+    },
+    {
+      "id": "battle-000002",
+      "startedAt": "2026-06-17T20:49:36.806Z",
+      "finishedAt": "2026-06-17T20:54:01.052Z",
+      "seed": 20260618,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.2",
+        "name": "OpenAI GPT-5.2",
+        "model": "gpt-5.2",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "meganium-balance",
+          "name": "Meganium Balance",
+          "file": "data/teams/sample-pool/meganium-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/meganium-balance.txt",
+        "choices": 28,
+        "invalidActions": 0,
+        "timeouts": 8,
+        "errors": 0,
+        "ratingBefore": 1500,
+        "ratingAfter": 1484,
+        "ratingDelta": -16
+      },
+      "p2": {
+        "id": "gpt-5.4",
+        "name": "OpenAI GPT-5.4",
+        "model": "gpt-5.4",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "excadrill-offense",
+          "name": "Excadrill Offense",
+          "file": "data/teams/sample-pool/excadrill-offense.txt"
+        },
+        "teamFile": "data/teams/sample-pool/excadrill-offense.txt",
+        "choices": 26,
+        "invalidActions": 0,
+        "timeouts": 17,
+        "errors": 0,
+        "ratingBefore": 1500,
+        "ratingAfter": 1516,
+        "ratingDelta": 16
+      },
+      "winnerId": "gpt-5.4",
+      "winnerName": "OpenAI GPT-5.4",
+      "tie": false,
+      "turns": 22
+    },
+    {
+      "id": "battle-000001",
+      "startedAt": "2026-06-17T20:41:34.744Z",
+      "finishedAt": "2026-06-17T20:49:36.799Z",
+      "seed": 20260617,
+      "matchmaking": "balanced-random",
+      "teamSelection": "random",
+      "formatId": "gen9championsou",
+      "formatName": "[Gen 9 Champions] OU",
+      "p1": {
+        "id": "gpt-5.5",
+        "name": "OpenAI GPT-5.5",
+        "model": "gpt-5.5",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "excadrill-offense",
+          "name": "Excadrill Offense",
+          "file": "data/teams/sample-pool/excadrill-offense.txt"
+        },
+        "teamFile": "data/teams/sample-pool/excadrill-offense.txt",
+        "choices": 46,
+        "invalidActions": 0,
+        "timeouts": 36,
+        "errors": 0,
+        "ratingBefore": 1500,
+        "ratingAfter": 1516,
+        "ratingDelta": 16
+      },
+      "p2": {
+        "id": "o3",
+        "name": "OpenAI o3",
+        "model": "o3",
+        "reasoningEffort": "medium",
+        "team": {
+          "id": "delphox-balance",
+          "name": "Delphox Balance",
+          "file": "data/teams/sample-pool/delphox-balance.txt"
+        },
+        "teamFile": "data/teams/sample-pool/delphox-balance.txt",
+        "choices": 46,
+        "invalidActions": 0,
+        "timeouts": 33,
+        "errors": 0,
+        "ratingBefore": 1500,
+        "ratingAfter": 1484,
+        "ratingDelta": -16
+      },
+      "winnerId": "gpt-5.5",
+      "winnerName": "OpenAI GPT-5.5",
+      "tie": false,
+      "turns": 40
     }
   ]
 }
