@@ -58,7 +58,6 @@ function render() {
 
   const players = sortPlayers(data.players ?? []);
 
-  document.getElementById('seasonName').textContent = data.season?.name ?? data.season ?? data.manifestName ?? 'Arena';
   document.getElementById('formatName').textContent = data.formatName ?? data.format ?? data.formatId ?? 'Unknown';
   document.getElementById('totalGames').textContent = String(data.totalGames ?? 0);
   const updatedAt = document.getElementById('updatedAt');
@@ -398,7 +397,7 @@ function modelLine(player) {
 }
 
 function recordCell(player) {
-  return `${formatNumber(player.wins)}-${formatNumber(player.losses)}-${formatNumber(player.ties)}`;
+  return `${formatNumber(player.wins)}-${formatNumber(player.losses)}`;
 }
 
 function winRateCell(player) {
@@ -419,7 +418,8 @@ function streakText(streak) {
   const count = Number(streak?.count ?? 0);
   if (!count) return 'even';
   const kind = String(streak?.kind ?? streak?.type ?? '').toLowerCase();
-  const label = kind.startsWith('win') ? 'W' : kind.startsWith('loss') ? 'L' : kind.startsWith('tie') ? 'T' : kind.slice(0, 1).toUpperCase();
+  if (kind.startsWith('tie')) return 'even';
+  const label = kind.startsWith('win') ? 'W' : kind.startsWith('loss') ? 'L' : kind.slice(0, 1).toUpperCase();
   return `${label}${count}`;
 }
 

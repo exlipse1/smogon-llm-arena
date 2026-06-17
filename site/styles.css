@@ -91,7 +91,7 @@ h1 {
 
 .run-meta {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line-strong);
@@ -105,12 +105,8 @@ h1 {
   background: rgba(255, 255, 255, 0.42);
 }
 
-.run-meta span:nth-child(2n) {
+.run-meta span:last-child {
   border-right: 0;
-}
-
-.run-meta span:nth-child(n + 3) {
-  border-top: 1px solid var(--line);
 }
 
 .run-meta small {
