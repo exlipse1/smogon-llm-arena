@@ -23,4 +23,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Verify benchmark bundle
-        run: pnpm run verify
+        run: |
+          node --check src/cli.js
+          node --check src/live-results.js
+          node --check src/showdown/live-ladder.js
+          node --check src/readiness.js
+          node test/openai-agent.mjs
+          node test/smoke.mjs
+          node test/live-ladder-mock.mjs
+          node scripts/check-site.mjs
