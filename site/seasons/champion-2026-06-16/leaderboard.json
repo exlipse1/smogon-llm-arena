@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-17T15:02:37.569Z",
+  "generatedAt": "2026-06-17T15:22:21.908Z",
   "benchmark": "Smogon LLM Arena",
   "manifestName": "openai-champions-ou-ladder",
   "season": {
     "id": "champion-2026-06-16",
     "name": "Champion Season",
     "startedAt": "2026-06-16T00:00:00.000Z",
-    "generatedAt": "2026-06-17T15:02:37.569Z",
+    "generatedAt": "2026-06-17T15:22:21.908Z",
     "description": "Model-built team season for OpenAI model team building and battle piloting on the Champions OU ladder.",
     "resetPolicy": "Archive site/seasons/champion-2026-06-16 before starting the next season."
   },
@@ -25,12 +25,12 @@
     "kFactor": 32,
     "liveInitialRating": 1000,
     "liveRatingFloor": 1000,
-    "liveSource": "Pokemon Showdown public ladder rating observed at battle start"
+    "liveSource": "Pokemon Showdown public ladder rating observed at battle start, plus estimated final point"
   },
   "totalGames": 164,
   "health": {
     "state": "degraded",
-    "generatedAt": "2026-06-17T15:02:37.569Z",
+    "generatedAt": "2026-06-17T15:22:21.908Z",
     "lastBattleAt": "2026-06-17T06:53:32.633Z",
     "activePlayers": 4,
     "totalPlayers": 4
@@ -43,12 +43,12 @@
       "model": "gpt-5.5",
       "reasoningEffort": "medium",
       "teamSource": "openai-generated",
-      "rating": 1316,
-      "benchmarkRating": 1316,
-      "ratingSource": "battle-start",
-      "ratingDelta": null,
-      "ratingDeltaSource": null,
-      "ratingDeltaPrevious": null,
+      "rating": 1304,
+      "benchmarkRating": 1304,
+      "ratingSource": "estimated-final",
+      "ratingDelta": -12,
+      "ratingDeltaSource": "estimated-final",
+      "ratingDeltaPrevious": 1316,
       "peakRating": 1323,
       "floorRating": 1000,
       "games": 34,
@@ -278,6 +278,16 @@
           "rating": 1316,
           "at": "2026-06-17T06:46:21.513Z",
           "source": "battle-start"
+        },
+        {
+          "battle": 34,
+          "rating": 1304,
+          "at": "2026-06-17T06:52:46.346Z",
+          "source": "estimated-final",
+          "outcome": "loss",
+          "ratingBefore": 1316,
+          "opponentRating": 1413,
+          "delta": -12
         }
       ]
     },
@@ -288,13 +298,13 @@
       "model": "gpt-5.2",
       "reasoningEffort": "medium",
       "teamSource": "openai-generated",
-      "rating": 1169,
-      "benchmarkRating": 1169,
-      "ratingSource": "battle-start",
-      "ratingDelta": null,
-      "ratingDeltaSource": null,
-      "ratingDeltaPrevious": null,
-      "peakRating": 1182,
+      "rating": 1185,
+      "benchmarkRating": 1185,
+      "ratingSource": "estimated-final",
+      "ratingDelta": 16,
+      "ratingDeltaSource": "estimated-final",
+      "ratingDeltaPrevious": 1169,
+      "peakRating": 1185,
       "floorRating": 1000,
       "games": 57,
       "wins": 26,
@@ -625,6 +635,16 @@
           "rating": 1169,
           "at": "2026-06-17T06:43:02.864Z",
           "source": "battle-start"
+        },
+        {
+          "battle": 57,
+          "rating": 1185,
+          "at": "2026-06-17T06:51:58.149Z",
+          "source": "estimated-final",
+          "outcome": "win",
+          "ratingBefore": 1169,
+          "opponentRating": 1175,
+          "delta": 16
         }
       ]
     },
@@ -635,12 +655,12 @@
       "model": "gpt-5.4",
       "reasoningEffort": "medium",
       "teamSource": "openai-generated",
-      "rating": 1153,
-      "benchmarkRating": 1153,
-      "ratingSource": "battle-start",
-      "ratingDelta": null,
-      "ratingDeltaSource": null,
-      "ratingDeltaPrevious": null,
+      "rating": 1130,
+      "benchmarkRating": 1130,
+      "ratingSource": "estimated-final",
+      "ratingDelta": -23,
+      "ratingDeltaSource": "estimated-final",
+      "ratingDeltaPrevious": 1153,
       "peakRating": 1186,
       "floorRating": 1000,
       "games": 50,
@@ -954,6 +974,16 @@
           "rating": 1153,
           "at": "2026-06-17T06:46:51.109Z",
           "source": "battle-start"
+        },
+        {
+          "battle": 50,
+          "rating": 1130,
+          "at": "2026-06-17T06:53:32.633Z",
+          "source": "estimated-final",
+          "outcome": "loss",
+          "ratingBefore": 1153,
+          "opponentRating": 1000,
+          "delta": -23
         }
       ]
     },
@@ -964,12 +994,12 @@
       "model": "o3",
       "reasoningEffort": "medium",
       "teamSource": "openai-generated",
-      "rating": 1007,
-      "benchmarkRating": 1007,
-      "ratingSource": "battle-start",
-      "ratingDelta": null,
-      "ratingDeltaSource": null,
-      "ratingDeltaPrevious": null,
+      "rating": 1000,
+      "benchmarkRating": 1000,
+      "ratingSource": "estimated-final",
+      "ratingDelta": -7,
+      "ratingDeltaSource": "estimated-final",
+      "ratingDeltaPrevious": 1007,
       "peakRating": 1053,
       "floorRating": 1000,
       "games": 23,
@@ -1103,6 +1133,16 @@
           "rating": 1007,
           "at": "2026-06-17T04:09:03.938Z",
           "source": "battle-start"
+        },
+        {
+          "battle": 23,
+          "rating": 1000,
+          "at": "2026-06-17T04:17:23.438Z",
+          "source": "estimated-final",
+          "outcome": "loss",
+          "ratingBefore": 1007,
+          "opponentRating": 1000,
+          "delta": -7
         }
       ]
     }

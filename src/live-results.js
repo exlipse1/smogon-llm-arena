@@ -3,6 +3,7 @@ import {fromRoot} from './core/paths.js';
 import {activePlayers} from './core/manifest.js';
 import {loadFreeze} from './showdown/freeze.js';
 import {fetchPublicUserRating} from './showdown/public-ratings.js';
+import {updateElo} from './core/elo.js';
 
 const HISTORY_LIMIT = 200;
 const RECENT_MATCH_LIMIT = 100;
@@ -72,6 +73,7 @@ export async function publishLiveLeaderboard(options = {}) {
       records: recordsByPlayer.get(player.id) ?? [],
       initialRating: LIVE_INITIAL_RATING,
       ratingFloor: LIVE_RATING_FLOOR,
+      kFactor: Number(freeze.ratingSystem?.kFactor ?? 32),
       publicRating: publicRatingsByPlayer.get(player.id) ?? null,
       liveStatus: statusByPlayer.get(player.id) ?? null,
       staleAfterMs,
@@ -126,7 +128,7 @@ export async function publishLiveLeaderboard(options = {}) {
       liveRatingFloor: LIVE_RATING_FLOOR,
       liveSource: pollRatings ?
         'Pokemon Showdown users JSON API, falling back to battle-start rating' :
-        'Pokemon Showdown public ladder rating observed at battle start',
+        'Pokemon Showdown public ladder rating observed at battle start, plus estimated final point',
     },
     totalGames: players.reduce((sum, player) => sum + player.games, 0),
     health,
@@ -248,6 +250,7 @@ function summarizeLivePlayer({
   records,
   initialRating,
   ratingFloor,
+  kFactor,
   publicRating = null,
   liveStatus = null,
   staleAfterMs,
@@ -324,6 +327,19 @@ function summarizeLivePlayer({
         source: publicSource,
       });
     }
+  } else {
+    const estimatedFinal = estimateFinalRating({
+      record: ordered.at(-1),
+      ratingFloor,
+      kFactor,
+      battle: games,
+    });
+    if (estimatedFinal) {
+      rating = estimatedFinal.rating;
+      peakRating = Math.max(peakRating, estimatedFinal.rating);
+      floorRating = Math.min(floorRating, estimatedFinal.rating);
+      ratingHistory.push(estimatedFinal);
+    }
   }
 
   const ratingDeltaView = currentRatingDelta(ratingHistory, games);
@@ -382,7 +398,7 @@ function summarizeLivePlayer({
 
 function currentRatingDelta(ratingHistory, games) {
   const currentPoint = ratingHistory.at(-1);
-  if (!games || currentPoint?.source !== 'pokemon-showdown-users-json') {
+  if (!games || !['pokemon-showdown-users-json', 'estimated-final'].includes(currentPoint?.source)) {
     return {delta: null, source: null, previousRating: null};
   }
   const previousPoint = ratingHistory
@@ -394,6 +410,27 @@ function currentRatingDelta(ratingHistory, games) {
     delta: Math.round(currentPoint.rating - previousPoint.rating),
     source: currentPoint.source,
     previousRating: Math.round(previousPoint.rating),
+  };
+}
+
+function estimateFinalRating({record, ratingFloor, kFactor, battle}) {
+  if (!record) return null;
+  const ratingBefore = liveRatingOrNull(record.player?.ratingBefore, ratingFloor);
+  const opponentRating = liveRatingOrNull(record.opponent?.ratingBefore, ratingFloor);
+  if (ratingBefore === null || opponentRating === null) return null;
+  const outcome = normalizeOutcome(record);
+  const score = outcome === 'win' ? 1 : (outcome === 'loss' ? 0 : 0.5);
+  const next = updateElo(ratingBefore, opponentRating, score, kFactor).a;
+  const estimatedRating = Math.max(ratingFloor, Math.round(next));
+  return {
+    battle,
+    rating: estimatedRating,
+    at: record.finishedAt ?? record.startedAt ?? null,
+    source: 'estimated-final',
+    outcome,
+    ratingBefore,
+    opponentRating,
+    delta: estimatedRating - ratingBefore,
   };
 }
 
